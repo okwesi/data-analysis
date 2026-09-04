@@ -1,0 +1,29 @@
+RoSAS ANALYSIS
+========================================================================
+Unique participants in RoSAS dataset: N = 17
+
+SCORING
+------------------------------------------------------------------------
+Each RoSAS factor score is the mean of its six 1-9 item ratings.
+
+Warmth: Organic, Sociable, Emotional, Compassionate, Happy, Feeling
+Competence: Reliable, Competent, Knowledgeable, Interactive, Responsive, Capable
+Discomfort: Awkward, Scary, Strange, Awful, Dangerous, Aggressive
+
+FACTOR RESULTS
+------------------------------------------------------------------------
+Warmth: N=17, M=5.40, SD=1.40, Median=5.67, IQR=1.50, Range=2.67-7.67
+Competence: N=16, M=7.03, SD=1.55, Median=7.50, IQR=2.33, Range=4.17-9.00
+Discomfort: N=16, M=2.47, SD=1.53, Median=2.17, IQR=2.00, Range=1.00-6.17
+
+INTERNAL CONSISTENCY
+------------------------------------------------------------------------
+Warmth: Cronbach's alpha=0.697, complete-case N=17
+Competence: Cronbach's alpha=0.883, complete-case N=16
+Discomfort: Cronbach's alpha=0.824, complete-case N=16
+
+MISSING RESPONSES
+------------------------------------------------------------------------
+Missing RoSAS item responses: 2
+  P16: Interactive (Competence)
+  P9: Awful (Discomfort)

@@ -1,0 +1,18 @@
+Participant ID,Has Pre-Study SAM,Change Score Source,Pre Arousal Label,Pre Arousal Score,Post Arousal Label,Post Arousal Score,Arousal Change,Arousal Absolute Change,Arousal Change Direction,Pre Valence Label,Pre Valence Score,Post Valence Label,Post Valence Score,Valence Change,Valence Absolute Change,Valence Change Direction
+P1,True,Real Pre + Post,Neutral,3,Calm,2,-1,1,Calmer,Neutral,3,Pleasant,4,1,1,More pleasant
+P10,True,Real Pre + Post,Very Calm,1,Very Calm,1,0,0,No change,Very Pleasant,5,Very Pleasant,5,0,0,No change
+P11,True,Real Pre + Post,Neutral,3,Excited,4,1,1,More excited,Pleasant,4,Very Pleasant,5,1,1,More pleasant
+P12,False,Pre Missing -> Set to 0,Missing Pre-Study,0,Neutral,3,3,3,More excited,Missing Pre-Study,0,Neutral,3,3,3,More pleasant
+P13,True,Real Pre + Post,Excited,4,Excited,4,0,0,No change,Very Pleasant,5,Pleasant,4,-1,1,Less pleasant
+P14,True,Real Pre + Post,Excited,4,Excited,4,0,0,No change,Pleasant,4,Very Pleasant,5,1,1,More pleasant
+P15,True,Real Pre + Post,Very Calm,1,Very Excited,5,4,4,More excited,Very Pleasant,5,Very Pleasant,5,0,0,No change
+P16,True,Real Pre + Post,Excited,4,Excited,4,0,0,No change,Pleasant,4,Pleasant,4,0,0,No change
+P19,True,Real Pre + Post,Excited,4,Neutral,3,-1,1,Calmer,Pleasant,4,Pleasant,4,0,0,No change
+P2,True,Real Pre + Post,Excited,4,Excited,4,0,0,No change,Unpleasant,2,Pleasant,4,2,2,More pleasant
+P20,True,Real Pre + Post,Excited,4,Excited,4,0,0,No change,Pleasant,4,Pleasant,4,0,0,No change
+P21,True,Real Pre + Post,Neutral,3,Neutral,3,0,0,No change,Pleasant,4,Pleasant,4,0,0,No change
+P3,True,Real Pre + Post,Neutral,3,Excited,4,1,1,More excited,Very Pleasant,5,Very Pleasant,5,0,0,No change
+P4,False,Pre Missing -> Set to 0,Missing Pre-Study,0,Neutral,3,3,3,More excited,Missing Pre-Study,0,Very Pleasant,5,5,5,More pleasant
+P7,False,Pre Missing -> Set to 0,Missing Pre-Study,0,Excited,4,4,4,More excited,Missing Pre-Study,0,Pleasant,4,4,4,More pleasant
+P8,True,Real Pre + Post,Excited,4,Calm,2,-2,2,Calmer,Very Pleasant,5,Very Pleasant,5,0,0,No change
+P9,False,Pre Missing -> Set to 0,Missing Pre-Study,0,Calm,2,2,2,More excited,Missing Pre-Study,0,Pleasant,4,4,4,More pleasant

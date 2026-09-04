@@ -1,0 +1,19 @@
+Factor,Item,Valid N,Missing N,Mean,SD,Median,Q1,Q3,Minimum,Maximum
+Warmth,Organic,17,0,5.941,2.076,6.0,5.0,8.0,1.0,9.0
+Warmth,Sociable,17,0,6.824,1.944,7.0,6.0,9.0,3.0,9.0
+Warmth,Emotional,17,0,4.118,2.571,5.0,1.0,6.0,1.0,8.0
+Warmth,Compassionate,17,0,4.941,2.221,5.0,4.0,6.0,1.0,9.0
+Warmth,Happy,17,0,6.529,2.183,6.0,5.0,8.0,1.0,9.0
+Warmth,Feeling,17,0,4.059,2.277,4.0,2.0,6.0,1.0,9.0
+Competence,Reliable,17,0,6.882,1.576,7.0,6.0,8.0,4.0,9.0
+Competence,Competent,17,0,7.235,1.678,7.0,6.0,9.0,4.0,9.0
+Competence,Knowledgeable,17,0,7.529,1.807,8.0,6.0,9.0,3.0,9.0
+Competence,Interactive,16,1,7.062,2.081,7.0,6.0,9.0,2.0,9.0
+Competence,Responsive,17,0,6.941,2.076,8.0,5.0,9.0,3.0,9.0
+Competence,Capable,17,0,6.765,2.278,7.0,6.0,9.0,1.0,9.0
+Discomfort,Awkward,17,0,3.294,2.365,3.0,1.0,5.0,1.0,9.0
+Discomfort,Scary,17,0,1.588,1.121,1.0,1.0,2.0,1.0,5.0
+Discomfort,Strange,17,0,3.588,2.647,3.0,1.0,4.0,1.0,9.0
+Discomfort,Awful,16,1,2.125,2.062,1.0,1.0,2.5,1.0,8.0
+Discomfort,Dangerous,17,0,2.0,2.236,1.0,1.0,1.0,1.0,9.0
+Discomfort,Aggressive,17,0,2.235,2.166,1.0,1.0,3.0,1.0,8.0

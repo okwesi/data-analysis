@@ -1,0 +1,35 @@
+SAM PRE -> POST CHANGE ANALYSIS
+========================================================================
+
+All post-study participants included: N = 17
+Real pre/post pairs: N = 13
+Missing pre-study participants assigned Pre=0: N = 4
+Participants assigned Pre=0: P12, P4, P7, P9
+
+IMPORTANT CHANGE CALCULATION
+------------------------------------------------------------------------
+Change Score = Post Score - Pre Score
+
+For missing pre-study participants, Pre Score = 0, so their change is calculated from 0 to their post-study score.
+
+CHANGE SCORE SUMMARY - ALL 17
+------------------------------------------------------------------------
+Arousal: N=17, mean change=0.82, median change=0.00, mean absolute change=1.29, range=-2 to 4
+Valence: N=17, mean change=1.18, median change=0.00, mean absolute change=1.29, range=-1 to 5
+
+CHANGE DIRECTIONS - ALL 17
+------------------------------------------------------------------------
+Arousal
+  No change: 7 (41.2%)
+  More excited: 7 (41.2%)
+  Calmer: 3 (17.6%)
+Valence
+  More pleasant: 8 (47.1%)
+  No change: 8 (47.1%)
+  Less pleasant: 1 (5.9%)
+
+VALID WILCOXON TESTS
+------------------------------------------------------------------------
+The inferential test uses only genuine pre/post pairs. Participants whose pre score was artificially set to 0 are excluded from the Wilcoxon test.
+Arousal: paired N=13, W=10.0000, p=1.000000, rank-biserial effect=0.0476
+Valence: paired N=13, W=2.5000, p=0.312500, rank-biserial effect=0.6667

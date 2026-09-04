@@ -1,0 +1,62 @@
+FUTURE USE ANALYSIS
+============================================================================
+
+Participants: N = 17
+
+1. COULD THE ROBOT ASSIST PEOPLE IN THE SPORTS CENTRE?
+----------------------------------------------------------------------------
+Yes: 15/17 (88.2%)
+No: 0/17 (0.0%)
+Not sure: 2/17 (11.8%)
+
+2. LIKELIHOOD OF FUTURE USE
+----------------------------------------------------------------------------
+Very unlikely: 1/16 (6.2%)
+Unlikely: 1/16 (6.2%)
+Neither likely nor unlikely: 3/16 (18.8%)
+Likely: 8/16 (50.0%)
+Very likely: 3/16 (18.8%)
+Missing response: 1/17 (5.9%)
+
+Collapsed likelihood:
+Positive (Likely + Very likely): 11/16 (68.8%)
+Neutral: 3/16 (18.8%)
+Negative (Unlikely + Very unlikely): 2/16 (12.5%)
+
+3. INTEREST IN A FUTURE IMPROVED STUDY
+----------------------------------------------------------------------------
+Yes: 16/17 (94.1%)
+No: 1/17 (5.9%)
+
+============================================================================
+OPEN-ENDED FUTURE-USE CONCLUSION
+============================================================================
+
+PASTE THE MANUAL QUALITATIVE CONCLUSION BELOW:
+
+Participants generally viewed the robot as potentially useful for exercise guidance,
+ particularly for beginners or individuals who are unfamiliar with correct exercise form. 
+ Several responses emphasized the value of receiving form correction and feedback while learning 
+ new exercises, while others highlighted the potential for personalized workout routines, ease of use,
+  and availability as an on-demand exercise coach. One participant also noted that robotic coaching may 
+  provide feedback without the perceived judgment or biases associated with human observers.
+However, participants identified several areas that could affect future adoption, including the robot's 
+inability to move with users around the gym, privacy concerns related to recording people in the surrounding 
+environment, and limited social interaction. Overall, the responses suggest strong perceived potential for 
+the robot as an accessible exercise-support tool, while mobility, privacy, and social interaction remain
+ important considerations for future development.
+
+
+Open-Ended Response
+-   useful for a beginner or someone who doesnt know if they have good form or not.
+-   I enjoy having a routine and at times am nervous to try new exercises if I am confused about the form. Using this system would make trying new exercises easier and also be able to give you a personalized routine
+-   because not everyone knows how to do the exercises and its really helpful to correct them without the presense of a human who usually bring in their biases and judgements
+-   It would be a good coach and could be available for workouts at all exercise times. Morning and evening
+-   If the model could follow the participant and help he / she while they are doing their workout I think it would be better. But in general I found the robot helpful.
+-   Some people don't know the proper movements of certain exercises and the robot could help them find the proper form.
+-   I think the AI feedback is great and would optimize people's form. As my experience as a regular gym goer, people like to record themselves to look for feedback but this system would facilitate that
+-   easy to use
+-   Yes I think it's great the only problem would be like the recording if it does record the consent of people in the background
+-   because it could be used to help assist people with exercising.
+-   EASY TO UNDERSTSTAND
+-   social aspect missing

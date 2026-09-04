@@ -1,0 +1,9 @@
+Participant,Exercise,Set,Target Reps,Total Attempts,Correct Reps,Incorrect Reps,Notes,Participant Key,Exercise Key,Set Key,Video Participant,Video Exercise,Video Set,Video Total Reps,Video Correct Reps,Video Incorrect Reps,_merge
+P4,Squat,3,15,15,15.0,0,,P4,squat,3,,,,,,,left_only
+P4,Lateral Raise,3,10,15,0.0,15,,P4,lateral raise,3,,,,,,,left_only
+P4,Chest Fly Machine,3,8,11,8.0,3,,P4,chest fly machine,3,,,,,,,left_only
+P7,Squat,1,10,13,10.0,3,,P7,squat,1,,,,,,,left_only
+P7,Russian Twist,3,25,25,25.0,0,,P7,russian twist,3,,,,,,,left_only
+P10,Russian Twist,2,5,7,5.0,2,,P10,russian twist,2,,,,,,,left_only
+P12,Tricep Pushdown,3,12,13,12.0,1,,P12,tricep pushdown,3,,,,,,,left_only
+P14,Chest Fly Machine,2,8,10,8.0,2,,P14,chest fly machine,2,,,,,,,left_only

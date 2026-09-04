@@ -1,0 +1,18 @@
+Participant ID,Exercise Recognition,Corrective Feedback,Speech Understanding,Response Speed,Exercise Recognition Score,Corrective Feedback Score,Speech Understanding Score,Response Speed Score
+P1,Strongly agree,Agree,Strongly agree,Strongly agree,5,4,5.0,5
+P10,Strongly agree,Strongly agree,Strongly agree,Agree,5,5,5.0,4
+P11,Strongly agree,Strongly agree,Neither agree nor disagree,Strongly agree,5,5,3.0,5
+P12,Neither agree nor disagree,Neither agree nor disagree,Neither agree nor disagree,Neither agree nor disagree,3,3,3.0,3
+P13,Agree,Agree,Strongly agree,Agree,4,4,5.0,4
+P14,Strongly agree,Strongly agree,Strongly disagree,Strongly agree,5,5,1.0,5
+P15,Strongly disagree,Disagree,,Strongly disagree,1,2,,1
+P16,Agree,Neither agree nor disagree,Strongly agree,Agree,4,3,5.0,4
+P19,Agree,Neither agree nor disagree,Strongly agree,Strongly agree,4,3,5.0,5
+P2,Strongly agree,Agree,Strongly agree,Agree,5,4,5.0,4
+P20,Agree,Agree,Agree,Agree,4,4,4.0,4
+P21,Neither agree nor disagree,Neither agree nor disagree,Disagree,Disagree,3,3,2.0,2
+P3,Strongly agree,Strongly agree,Disagree,Strongly agree,5,5,2.0,5
+P4,Strongly agree,Strongly agree,Strongly agree,Strongly agree,5,5,5.0,5
+P7,Agree,Strongly agree,Agree,Strongly agree,4,5,4.0,5
+P8,Strongly agree,Strongly agree,Agree,Neither agree nor disagree,5,5,4.0,3
+P9,Strongly disagree,Strongly disagree,Strongly disagree,Strongly disagree,1,1,1.0,1

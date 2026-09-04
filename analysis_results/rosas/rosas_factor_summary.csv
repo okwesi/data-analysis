@@ -1,0 +1,4 @@
+Factor,Valid N,Missing N,Mean,SD,Median,Q1,Q3,IQR,Minimum,Maximum
+Warmth,17,0,5.402,1.401,5.667,4.667,6.167,1.5,2.667,7.667
+Competence,16,1,7.031,1.552,7.5,5.875,8.208,2.333,4.167,9.0
+Discomfort,16,1,2.469,1.53,2.167,1.167,3.167,2.0,1.0,6.167

@@ -1,0 +1,5 @@
+Construct,Timepoint,N,Mean,SD,Median,Q1,Q3,IQR,Minimum,Maximum
+Arousal,Pre,17,2.471,1.7,3.0,1.0,4.0,3.0,0.0,4.0
+Arousal,Post,17,3.294,1.047,4.0,3.0,4.0,1.0,1.0,5.0
+Valence,Pre,17,3.176,1.976,4.0,2.0,5.0,3.0,0.0,5.0
+Valence,Post,17,4.353,0.606,4.0,4.0,5.0,1.0,3.0,5.0

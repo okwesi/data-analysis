@@ -1,0 +1,5 @@
+Question,Valid N,Mean,SD,Median,Q1,Q3,IQR,Minimum,Maximum
+Exercise Recognition,17,4.0,1.323,4.0,4.0,5.0,1.0,1,5
+Corrective Feedback,17,3.882,1.219,4.0,3.0,5.0,2.0,1,5
+Speech Understanding,16,3.688,1.493,4.0,2.75,5.0,2.25,1,5
+Response Speed,17,3.824,1.38,4.0,3.0,5.0,2.0,1,5

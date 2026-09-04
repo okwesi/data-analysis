@@ -1,0 +1,23 @@
+# Python environments and caches
+venv/
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Local environment variables
+.env
+.env.*
+!.env.example
+
+# Research data containing direct participant identifiers
+Study Data(Demographics).csv
+analysis_results/demographics/duplicate_participant_records.csv
+
+# macOS and editor metadata
+.DS_Store
+.idea/
+.vscode/
+*.swp

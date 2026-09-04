@@ -1,0 +1,99 @@
+TECHNICAL PERFORMANCE MATRIX ANALYSIS
+============================================================================
+
+Participants in dataset: N = 17
+
+ANALYSIS METHOD
+----------------------------------------------------------------------------
+The four custom technical-performance matrix questions were analyzed descriptively.
+For each question, response frequencies (n) and percentages (%) were calculated across the five Likert response categories.
+Positive responses = Agree + Strongly agree.
+Neutral responses = Neither agree nor disagree.
+Negative responses = Disagree + Strongly disagree.
+Because these are custom study questions rather than a validated multi-item scale, no combined technical-performance score was created.
+
+QUESTIONS
+----------------------------------------------------------------------------
+1. Exercise Recognition: The robot correctly recognized the exercise I was performing.
+2. Corrective Feedback: The robot's corrective feedback matched my actual movement or exercise form.
+3. Speech Understanding: The robot correctly understood my spoken responses.
+4. Response Speed: The robot responded quickly enough during the exercise session.
+
+RESPONSE DISTRIBUTIONS
+----------------------------------------------------------------------------
+
+Exercise Recognition
+  Valid N: 17
+  Strongly disagree: 2 (11.8%)
+  Disagree: 0 (0.0%)
+  Neither agree nor disagree: 2 (11.8%)
+  Agree: 5 (29.4%)
+  Strongly agree: 8 (47.1%)
+
+Corrective Feedback
+  Valid N: 17
+  Strongly disagree: 1 (5.9%)
+  Disagree: 1 (5.9%)
+  Neither agree nor disagree: 4 (23.5%)
+  Agree: 4 (23.5%)
+  Strongly agree: 7 (41.2%)
+
+Speech Understanding
+  Valid N: 16
+  Strongly disagree: 2 (12.5%)
+  Disagree: 2 (12.5%)
+  Neither agree nor disagree: 2 (12.5%)
+  Agree: 3 (18.8%)
+  Strongly agree: 7 (43.8%)
+
+Response Speed
+  Valid N: 17
+  Strongly disagree: 2 (11.8%)
+  Disagree: 1 (5.9%)
+  Neither agree nor disagree: 2 (11.8%)
+  Agree: 5 (29.4%)
+  Strongly agree: 7 (41.2%)
+
+POSITIVE / NEUTRAL / NEGATIVE SUMMARY
+----------------------------------------------------------------------------
+Exercise Recognition: Positive 13/17 (76.5%), Neutral 2 (11.8%), Negative 2 (11.8%)
+Corrective Feedback: Positive 11/17 (64.7%), Neutral 4 (23.5%), Negative 2 (11.8%)
+Speech Understanding: Positive 10/16 (62.5%), Neutral 2 (12.5%), Negative 4 (25.0%)
+Response Speed: Positive 12/17 (70.6%), Neutral 2 (11.8%), Negative 3 (17.6%)
+
+NUMERIC DESCRIPTIVE SUMMARY
+----------------------------------------------------------------------------
+Scale: 1=Strongly disagree, 2=Disagree, 3=Neither, 4=Agree, 5=Strongly agree.
+Exercise Recognition: M=4.00, SD=1.32, Median=4.00, IQR=1.00
+Corrective Feedback: M=3.88, SD=1.22, Median=4.00, IQR=2.00
+Speech Understanding: M=3.69, SD=1.49, Median=4.00, IQR=2.25
+Response Speed: M=3.82, SD=1.38, Median=4.00, IQR=2.00
+
+MISSING RESPONSES
+----------------------------------------------------------------------------
+Missing matrix responses: 1
+  P15: Speech Understanding
+
+============================================================================
+OPEN-ENDED RESPONSE ANALYSIS
+============================================================================
+
+Technical Error Analysis: Participants reported several perceived technical issues
+ during the sessions, most commonly involving repetitions that were not counted during 
+ exercises such as push-ups, Russian twists, and T-bar rows. However, review of the recorded 
+ sessions indicated that some of these uncounted repetitions were associated with incorrect 
+ exercise form or insufficient range of motion, meaning that the absence of a rep count did 
+ not necessarily represent a system failure. These cases were therefore distinguished from 
+ verified technical failures. Confirmed interaction issues included a speech-recognition failure 
+ and a dialogue-state error in which the robot repeatedly requested confirmation after the participant 
+ had already responded. Equipment constraints were also identified as a possible contributor to recognition 
+ difficulty during the T-bar row.
+
+
+
+- had trouble recognizing proper reps for T-bar rows. (could have been an issue with the equipment not allowing proper rep range)
+- For pushups and russian twists it wouldnt count all my reps
+- did not recognize my voice
+- When proceeding with workout two for russian twists the robot started repeating if i was reading to start when i already said yes but then it worked later
+- i had trouble with my pushups and learning how to adjust my body.
+- Didn not count reps everytime

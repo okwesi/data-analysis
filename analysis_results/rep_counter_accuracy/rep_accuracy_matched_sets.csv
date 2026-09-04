@@ -1,0 +1,133 @@
+Participant,Exercise,Set,Target Reps,Total Attempts,Correct Reps,Incorrect Reps,Notes,Participant Key,Exercise Key,Set Key,Video Participant,Video Exercise,Video Set,Video Total Reps,Video Correct Reps,Video Incorrect Reps,_merge,Total Count Error,Total Count Absolute Error,Correct Count Error,Correct Count Absolute Error,Incorrect Count Error,Incorrect Count Absolute Error
+P1,Hammer Curl,1,10,12,10.0,2,Bent down to pick the dumbells and the system counted the movement as a failed rep,P1,hammer curl,1,P1,Hammer Curl,1,10.0,10.0,0.0,both,2.0,2.0,0.0,0.0,2.0,2.0
+P1,Lateral Raise,1,10,15,10.0,5,Was changing the dumbel and the system counted them as failed rep,P1,lateral raise,1,P1,Lateral Raise,1,11.0,10.0,1.0,both,4.0,4.0,0.0,0.0,4.0,4.0
+P1,Tricep Pushdown,1,10,11,10.0,1,,P1,tricep pushdown,1,P1,Tricep Pushdown,1,9.0,9.0,0.0,both,2.0,2.0,1.0,1.0,1.0,1.0
+P1,Chest Fly Machine,1,10,12,10.0,2,Counted two good ones as bad,P1,chest fly machine,1,P1,Chest Fly Machine,1,10.0,10.0,0.0,both,2.0,2.0,0.0,0.0,2.0,2.0
+P2,Hammer Curl,1,8,8,8.0,0,,P2,hammer curl,1,P2,Hammer Curl,1,9.0,9.0,0.0,both,-1.0,1.0,-1.0,1.0,0.0,0.0
+P2,Lateral Raise,1,8,9,8.0,1,,P2,lateral raise,1,P2,Lateral Raises,1,9.0,9.0,0.0,both,0.0,0.0,-1.0,1.0,1.0,1.0
+P2,Leg Extension,1,8,11,8.0,3,,P2,leg extension,1,P2,Leg Extension,1,18.0,18.0,0.0,both,-7.0,7.0,-10.0,10.0,3.0,3.0
+P3,Squat,1,10,10,10.0,0,,P3,squat,1,P3,Squat,1,10.0,10.0,0.0,both,0.0,0.0,0.0,0.0,0.0,0.0
+P3,Squat,2,10,11,10.0,1,,P3,squat,2,P3,Squat,2,11.0,11.0,0.0,both,0.0,0.0,-1.0,1.0,1.0,1.0
+P3,Squat,3,10,11,10.0,1,,P3,squat,3,P3,Squat,3,10.0,10.0,0.0,both,1.0,1.0,0.0,0.0,1.0,1.0
+P3,Lateral Raise,1,10,10,10.0,0,,P3,lateral raise,1,P3,Lateral Raises,1,10.0,10.0,0.0,both,0.0,0.0,0.0,0.0,0.0,0.0
+P3,Lateral Raise,2,10,10,10.0,0,,P3,lateral raise,2,P3,Lateral Raises,2,10.0,10.0,0.0,both,0.0,0.0,0.0,0.0,0.0,0.0
+P3,Lateral Raise,3,10,10,10.0,0,,P3,lateral raise,3,P3,Lateral Raises,3,10.0,10.0,0.0,both,0.0,0.0,0.0,0.0,0.0,0.0
+P3,Tricep Pushdown,1,10,14,10.0,4,,P3,tricep pushdown,1,P3,Tricep Pushdown,1,10.0,10.0,0.0,both,4.0,4.0,0.0,0.0,4.0,4.0
+P3,Tricep Pushdown,2,10,11,10.0,1,,P3,tricep pushdown,2,P3,Tricep Pushdown,2,11.0,11.0,0.0,both,0.0,0.0,-1.0,1.0,1.0,1.0
+P3,Tricep Pushdown,3,10,10,10.0,0,,P3,tricep pushdown,3,P3,Tricep Pushdown,3,8.0,8.0,0.0,both,2.0,2.0,2.0,2.0,0.0,0.0
+P3,Hammer Curl,1,10,12,10.0,2,,P3,hammer curl,1,P3,Hammer Curl,1,9.0,9.0,0.0,both,3.0,3.0,1.0,1.0,2.0,2.0
+P3,Hammer Curl,2,10,10,10.0,0,,P3,hammer curl,2,P3,Hammer Curl,2,10.0,10.0,0.0,both,0.0,0.0,0.0,0.0,0.0,0.0
+P4,Push-up,1,12,22,2.0,20,,P4,push-up,1,P4,Push-up,1,8.0,0.0,8.0,both,14.0,14.0,2.0,2.0,12.0,12.0
+P4,Push-up,2,12,7,0.0,7,,P4,push-up,2,P4,Push-up,2,5.0,0.0,5.0,both,2.0,2.0,0.0,0.0,2.0,2.0
+P4,Squat,1,15,17,12.0,5,,P4,squat,1,P4,Squats,1,23.0,15.0,8.0,both,-6.0,6.0,-3.0,3.0,-3.0,3.0
+P4,Squat,2,15,15,15.0,0,,P4,squat,2,P4,Squats,2,15.0,15.0,0.0,both,0.0,0.0,0.0,0.0,0.0,0.0
+P4,Hammer Curl,1,12,12,12.0,0,,P4,hammer curl,1,P4,Hammer Curl,1,12.0,12.0,0.0,both,0.0,0.0,0.0,0.0,0.0,0.0
+P4,Hammer Curl,2,12,12,12.0,0,,P4,hammer curl,2,P4,Hammer Curl,2,11.0,11.0,0.0,both,1.0,1.0,1.0,1.0,0.0,0.0
+P4,Hammer Curl,3,12,12,12.0,0,,P4,hammer curl,3,P4,Hammer Curl,3,12.0,12.0,0.0,both,0.0,0.0,0.0,0.0,0.0,0.0
+P4,Lateral Raise,1,10,16,10.0,6,,P4,lateral raise,1,P4,Lateral Raises,1,10.0,10.0,0.0,both,6.0,6.0,0.0,0.0,6.0,6.0
+P4,Lateral Raise,2,10,10,10.0,0,,P4,lateral raise,2,P4,Lateral Raises,2,9.0,9.0,0.0,both,1.0,1.0,1.0,1.0,0.0,0.0
+P4,Leg Raises,2,8,11,8.0,3,,P4,leg raises,2,P4,Leg Raises,2,12.0,12.0,0.0,both,-1.0,1.0,-4.0,4.0,3.0,3.0
+P4,Leg Raises,3,8,13,8.0,5,,P4,leg raises,3,P4,Leg Raises,3,13.0,13.0,0.0,both,0.0,0.0,-5.0,5.0,5.0,5.0
+P4,Russian Twist,1,10,12,10.0,2,,P4,russian twist,1,P4,Russian Twist,1,29.0,29.0,0.0,both,-17.0,17.0,-19.0,19.0,2.0,2.0
+P4,Russian Twist,2,10,10,10.0,0,,P4,russian twist,2,P4,Russian Twist,2,44.0,44.0,0.0,both,-34.0,34.0,-34.0,34.0,0.0,0.0
+P4,Russian Twist,3,10,10,10.0,0,,P4,russian twist,3,P4,Russian Twist,3,45.0,45.0,0.0,both,-35.0,35.0,-35.0,35.0,0.0,0.0
+P4,Tricep Pushdown,1,8,19,8.0,11,,P4,tricep pushdown,1,P4,Tricep Pushdown,1,14.0,8.0,6.0,both,5.0,5.0,0.0,0.0,5.0,5.0
+P4,Tricep Pushdown,2,8,24,8.0,16,,P4,tricep pushdown,2,P4,Tricep Pushdown,2,10.0,6.0,4.0,both,14.0,14.0,2.0,2.0,12.0,12.0
+P4,Tricep Pushdown,3,8,19,8.0,11,,P4,tricep pushdown,3,P4,Tricep Pushdown,3,12.0,12.0,0.0,both,7.0,7.0,-4.0,4.0,11.0,11.0
+P4,Chest Fly Machine,1,8,13,8.0,5,,P4,chest fly machine,1,P4,Chest Fly Machine,1,15.0,12.0,3.0,both,-2.0,2.0,-4.0,4.0,2.0,2.0
+P4,Chest Fly Machine,2,8,10,8.0,2,,P4,chest fly machine,2,P4,Chest Fly Machine,2,14.0,12.0,2.0,both,-4.0,4.0,-4.0,4.0,0.0,0.0
+P4,T-Bar Row,1,8,25,8.0,17,,P4,t-bar row,1,P4,T-Bar Row,1,5.0,5.0,0.0,both,20.0,20.0,3.0,3.0,17.0,17.0
+P4,T-Bar Row,2,8,11,8.0,3,,P4,t-bar row,2,P4,T-Bar Row,2,9.0,9.0,0.0,both,2.0,2.0,-1.0,1.0,3.0,3.0
+P4,T-Bar Row,3,8,12,8.0,4,,P4,t-bar row,3,P4,T-Bar Row,3,10.0,10.0,0.0,both,2.0,2.0,-2.0,2.0,4.0,4.0
+P4,Leg Extension,1,8,9,8.0,1,,P4,leg extension,1,P4,Leg Extension,1,12.0,12.0,0.0,both,-3.0,3.0,-4.0,4.0,1.0,1.0
+P4,Leg Extension,2,8,9,8.0,1,,P4,leg extension,2,P4,Leg Extension,2,10.0,10.0,0.0,both,-1.0,1.0,-2.0,2.0,1.0,1.0
+P4,Leg Extension,3,8,8,8.0,0,,P4,leg extension,3,P4,Leg Extension,3,10.0,10.0,0.0,both,-2.0,2.0,-2.0,2.0,0.0,0.0
+P7,Squat,2,10,10,10.0,0,,P7,squat,2,P7,Squat,2,10.0,10.0,0.0,both,0.0,0.0,0.0,0.0,0.0,0.0
+P7,Squat,3,10,12,10.0,2,,P7,squat,3,P7,Squat,3,10.0,10.0,0.0,both,2.0,2.0,0.0,0.0,2.0,2.0
+P7,Russian Twist,2,25,25,25.0,0,,P7,russian twist,2,P7,Russian Twist,2,42.0,42.0,0.0,both,-17.0,17.0,-17.0,17.0,0.0,0.0
+P7,Leg Extension,1,12,19,12.0,7,,P7,leg extension,1,P7,Leg Extension,1,12.0,12.0,0.0,both,7.0,7.0,0.0,0.0,7.0,7.0
+P7,Leg Extension,2,12,14,12.0,2,,P7,leg extension,2,P7,Leg Extension,2,12.0,12.0,0.0,both,2.0,2.0,0.0,0.0,2.0,2.0
+P7,Leg Extension,3,12,14,12.0,2,,P7,leg extension,3,P7,Leg Extension,3,13.0,12.0,1.0,both,1.0,1.0,0.0,0.0,1.0,1.0
+P8,Push-up,1,9,17,9.0,8,,P8,push-up,1,P8,Push-up,1,11.0,11.0,0.0,both,6.0,6.0,-2.0,2.0,8.0,8.0
+P8,Push-up,2,9,11,9.0,2,,P8,push-up,2,P8,Push-up,2,10.0,10.0,0.0,both,1.0,1.0,-1.0,1.0,2.0,2.0
+P8,Squat,1,15,15,15.0,0,,P8,squat,1,P8,Squat,1,15.0,15.0,0.0,both,0.0,0.0,0.0,0.0,0.0,0.0
+P8,Squat,2,15,15,15.0,0,,P8,squat,2,P8,Squat,2,15.0,15.0,0.0,both,0.0,0.0,0.0,0.0,0.0,0.0
+P8,Squat,3,15,15,15.0,0,,P8,squat,3,P8,Squat,3,15.0,15.0,0.0,both,0.0,0.0,0.0,0.0,0.0,0.0
+P8,Hammer Curl,1,10,10,10.0,0,,P8,hammer curl,1,P8,Hammer Curl,1,10.0,10.0,0.0,both,0.0,0.0,0.0,0.0,0.0,0.0
+P8,Lateral Raise,1,10,11,10.0,1,,P8,lateral raise,1,P8,Lateral Raises,1,10.0,10.0,0.0,both,1.0,1.0,0.0,0.0,1.0,1.0
+P8,Tricep Pushdown,1,12,12,12.0,0,,P8,tricep pushdown,1,P8,Tricep Pushdown,1,12.0,12.0,0.0,both,0.0,0.0,0.0,0.0,0.0,0.0
+P8,Tricep Pushdown,2,12,13,12.0,1,,P8,tricep pushdown,2,P8,Tricep Pushdown,2,11.0,11.0,0.0,both,2.0,2.0,1.0,1.0,1.0,1.0
+P8,Tricep Pushdown,3,12,12,12.0,0,,P8,tricep pushdown,3,P8,Tricep Pushdown,3,11.0,11.0,0.0,both,1.0,1.0,1.0,1.0,0.0,0.0
+P9,Push-up,1,10,55,4.0,51,,P9,push-up,1,P9,Push-up,1,22.0,0.0,22.0,both,33.0,33.0,4.0,4.0,29.0,29.0
+P9,Squat,1,11,12,11.0,1,,P9,squat,1,P9,Squat,1,11.0,11.0,0.0,both,1.0,1.0,0.0,0.0,1.0,1.0
+P9,Chest Fly Machine,1,12,15,12.0,3,,P9,chest fly machine,1,P9,Chest Fly Machine,1,14.0,14.0,0.0,both,1.0,1.0,-2.0,2.0,3.0,3.0
+P9,Chest Fly Machine,2,12,19,12.0,7,,P9,chest fly machine,2,P9,Chest Fly Machine,2,9.0,9.0,0.0,both,10.0,10.0,3.0,3.0,7.0,7.0
+P9,Chest Fly Machine,3,12,15,12.0,3,,P9,chest fly machine,3,P9,Chest Fly Machine,3,15.0,15.0,0.0,both,0.0,0.0,-3.0,3.0,3.0,3.0
+P10,Push-up,1,12,17,3.0,14,,P10,push-up,1,P10,Push-up,1,17.0,0.0,17.0,both,0.0,0.0,3.0,3.0,-3.0,3.0
+P10,Push-up,2,12,17,3.0,14,,P10,push-up,2,P10,Push-up,2,12.0,0.0,12.0,both,5.0,5.0,3.0,3.0,2.0,2.0
+P10,Hammer Curl,1,8,8,8.0,0,,P10,hammer curl,1,P10,Hammer Curl,1,8.0,8.0,0.0,both,0.0,0.0,0.0,0.0,0.0,0.0
+P10,Hammer Curl,2,8,8,8.0,0,,P10,hammer curl,2,P10,Hammer Curl,2,8.0,8.0,0.0,both,0.0,0.0,0.0,0.0,0.0,0.0
+P10,Squat,1,10,10,10.0,0,,P10,squat,1,P10,Squat,1,10.0,10.0,0.0,both,0.0,0.0,0.0,0.0,0.0,0.0
+P10,Squat,2,10,10,10.0,0,,P10,squat,2,P10,Squat,2,10.0,10.0,0.0,both,0.0,0.0,0.0,0.0,0.0,0.0
+P10,Russian Twist,1,5,5,5.0,0,,P10,russian twist,1,P10,Russian Twists,1,18.0,18.0,0.0,both,-13.0,13.0,-13.0,13.0,0.0,0.0
+P10,Tricep Pushdown,1,12,15,12.0,3,,P10,tricep pushdown,1,P10,Tricep Pushdown,1,9.0,9.0,0.0,both,6.0,6.0,3.0,3.0,3.0,3.0
+P10,Tricep Pushdown,2,12,14,12.0,2,,P10,tricep pushdown,2,P10,Tricep Pushdown,2,10.0,10.0,0.0,both,4.0,4.0,2.0,2.0,2.0,2.0
+P11,Hammer Curl,1,15,16,15.0,1,,P11,hammer curl,1,P11,Hammer Curl,1,15.0,15.0,0.0,both,1.0,1.0,0.0,0.0,1.0,1.0
+P11,Hammer Curl,2,15,21,15.0,6,,P11,hammer curl,2,P11,Hammer Curl,2,15.0,15.0,0.0,both,6.0,6.0,0.0,0.0,6.0,6.0
+P11,Hammer Curl,3,15,24,15.0,9,,P11,hammer curl,3,P11,Hammer Curl,3,15.0,15.0,0.0,both,9.0,9.0,0.0,0.0,9.0,9.0
+P13,Push-up,1,12,12,12.0,0,,P13,push-up,1,P13,Push-up,1,11.0,11.0,0.0,both,1.0,1.0,1.0,1.0,0.0,0.0
+P13,Push-up,2,15,16,15.0,1,,P13,push-up,2,P13,Push-up,2,15.0,15.0,0.0,both,1.0,1.0,0.0,0.0,1.0,1.0
+P13,Push-up,3,10,12,10.0,2,,P13,push-up,3,P13,Push-up,3,10.0,10.0,0.0,both,2.0,2.0,0.0,0.0,2.0,2.0
+P13,T-Bar Row,1,12,30,3.0,27,,P13,t-bar row,1,P13,T-Bar Row,1,0.0,0.0,14.0,both,30.0,30.0,3.0,3.0,13.0,13.0
+P13,Chest Fly Machine,1,8,11,8.0,3,,P13,chest fly machine,1,P13,Chest Fly Machine,1,8.0,8.0,0.0,both,3.0,3.0,0.0,0.0,3.0,3.0
+P13,Chest Fly Machine,2,8,11,8.0,3,,P13,chest fly machine,2,P13,Chest Fly Machine,2,8.0,8.0,0.0,both,3.0,3.0,0.0,0.0,3.0,3.0
+P14,Hammer Curl,1,8,10,8.0,2,,P14,hammer curl,1,P14,Hammer Curl,1,9.0,9.0,0.0,both,1.0,1.0,-1.0,1.0,2.0,2.0
+P14,Hammer Curl,2,8,10,8.0,2,,P14,hammer curl,2,P14,Hammer Curl,2,8.0,8.0,0.0,both,2.0,2.0,0.0,0.0,2.0,2.0
+P14,Hammer Curl,3,8,8,8.0,0,,P14,hammer curl,3,P14,Hammer Curl,3,8.0,8.0,0.0,both,0.0,0.0,0.0,0.0,0.0,0.0
+P14,Lateral Raise,1,8,9,8.0,1,,P14,lateral raise,1,P14,Lateral Raises,1,7.0,7.0,0.0,both,2.0,2.0,1.0,1.0,1.0,1.0
+P14,Lateral Raise,2,8,8,8.0,0,,P14,lateral raise,2,P14,Lateral Raise,2,7.0,7.0,0.0,both,1.0,1.0,1.0,1.0,0.0,0.0
+P14,Lateral Raise,3,8,8,8.0,0,,P14,lateral raise,3,P14,Lateral Raise,3,8.0,8.0,0.0,both,0.0,0.0,0.0,0.0,0.0,0.0
+P14,Leg Raises,1,8,16,8.0,8,,P14,leg raises,1,P14,Leg Raises,1,9.0,9.0,0.0,both,7.0,7.0,-1.0,1.0,8.0,8.0
+P14,Tricep Pushdown,1,8,14,8.0,6,,P14,tricep pushdown,1,P14,Tricep Pushdown,1,7.0,7.0,0.0,both,7.0,7.0,1.0,1.0,6.0,6.0
+P14,Chest Fly Machine,1,8,8,8.0,0,,P14,chest fly machine,1,P14,Chest Fly Machine,1,8.0,6.0,2.0,both,0.0,0.0,2.0,2.0,-2.0,2.0
+P14,Leg Extension,1,8,9,8.0,1,,P14,leg extension,1,P14,Leg Extension,1,10.0,10.0,0.0,both,-1.0,1.0,-2.0,2.0,1.0,1.0
+P15,Squat,1,10,10,10.0,0,,P15,squat,1,P15,Squat,1,10.0,10.0,0.0,both,0.0,0.0,0.0,0.0,0.0,0.0
+P15,Squat,2,10,10,10.0,0,,P15,squat,2,P15,Squat,2,10.0,10.0,0.0,both,0.0,0.0,0.0,0.0,0.0,0.0
+P15,Leg Extension,1,10,12,10.0,2,,P15,leg extension,1,P15,Leg Extension,1,10.0,10.0,0.0,both,2.0,2.0,0.0,0.0,2.0,2.0
+P15,Leg Extension,2,10,10,10.0,0,,P15,leg extension,2,P15,Leg Extension,2,10.0,10.0,0.0,both,0.0,0.0,0.0,0.0,0.0,0.0
+P16,Push-up,1,8,20,8.0,12,,P16,push-up,1,P16,Push-up,1,13.0,13.0,0.0,both,7.0,7.0,-5.0,5.0,12.0,12.0
+P16,Push-up,2,8,27,8.0,19,,P16,push-up,2,P16,Push-up,2,12.0,12.0,0.0,both,15.0,15.0,-4.0,4.0,19.0,19.0
+P16,Push-up,3,8,9,8.0,1,,P16,push-up,3,P16,Push-up,3,8.0,8.0,0.0,both,1.0,1.0,0.0,0.0,1.0,1.0
+P16,Squat,1,10,19,10.0,9,,P16,squat,1,P16,Squat,1,14.0,14.0,0.0,both,5.0,5.0,-4.0,4.0,9.0,9.0
+P16,Squat,2,10,12,10.0,2,,P16,squat,2,P16,Squat,2,12.0,12.0,0.0,both,0.0,0.0,-2.0,2.0,2.0,2.0
+P16,Squat,3,10,12,10.0,2,,P16,squat,3,P16,Squat,3,13.0,13.0,0.0,both,-1.0,1.0,-3.0,3.0,2.0,2.0
+P16,Hammer Curl,1,10,11,10.0,1,,P16,hammer curl,1,P16,Hammer Curl,1,10.0,10.0,0.0,both,1.0,1.0,0.0,0.0,1.0,1.0
+P16,Hammer Curl,2,10,11,10.0,1,,P16,hammer curl,2,P16,Hammer Curl,2,10.0,10.0,0.0,both,1.0,1.0,0.0,0.0,1.0,1.0
+P16,Hammer Curl,3,10,13,10.0,3,,P16,hammer curl,3,P16,Hammer Curl,3,10.0,10.0,0.0,both,3.0,3.0,0.0,0.0,3.0,3.0
+P16,Russian Twist,1,20,22,20.0,2,,P16,russian twist,1,P16,Russian Twist,1,34.0,34.0,0.0,both,-12.0,12.0,-14.0,14.0,2.0,2.0
+P19,Hammer Curl,1,12,12,12.0,0,,P19,hammer curl,1,P19,Hammer Curl,1,12.0,12.0,0.0,both,0.0,0.0,0.0,0.0,0.0,0.0
+P19,Hammer Curl,2,12,12,12.0,0,,P19,hammer curl,2,P19,Hammer Curl,2,12.0,12.0,0.0,both,0.0,0.0,0.0,0.0,0.0,0.0
+P19,Hammer Curl,3,12,13,12.0,1,,P19,hammer curl,3,P19,Hammer Curl,3,13.0,13.0,0.0,both,0.0,0.0,-1.0,1.0,1.0,1.0
+P19,Squat,1,5,5,5.0,0,,P19,squat,1,P19,Squat,1,5.0,3.0,2.0,both,0.0,0.0,2.0,2.0,-2.0,2.0
+P19,Squat,2,5,5,,0,,P19,squat,2,P19,Squat,2,5.0,5.0,0.0,both,0.0,0.0,,,0.0,0.0
+P19,Squat,3,5,5,5.0,0,,P19,squat,3,P19,Squat,3,5.0,5.0,0.0,both,0.0,0.0,0.0,0.0,0.0,0.0
+P20,Hammer Curl,1,8,8,8.0,0,,P20,hammer curl,1,P20,Hammer Curl,1,17.0,17.0,0.0,both,-9.0,9.0,-9.0,9.0,0.0,0.0
+P20,Hammer Curl,2,8,8,8.0,0,,P20,hammer curl,2,P20,Hammer Curl,2,8.0,8.0,0.0,both,0.0,0.0,0.0,0.0,0.0,0.0
+P20,Hammer Curl,3,8,9,8.0,1,,P20,hammer curl,3,P20,Hammer Curl,3,10.0,10.0,0.0,both,-1.0,1.0,-2.0,2.0,1.0,1.0
+P20,Push-up,1,5,6,5.0,1,,P20,push-up,1,P20,Push-up,1,6.0,6.0,0.0,both,0.0,0.0,-1.0,1.0,1.0,1.0
+P20,Push-up,2,5,6,5.0,1,,P20,push-up,2,P20,Push-up,2,6.0,6.0,0.0,both,0.0,0.0,-1.0,1.0,1.0,1.0
+P20,Squat,1,10,10,10.0,0,,P20,squat,1,P20,Squat,1,10.0,10.0,0.0,both,0.0,0.0,0.0,0.0,0.0,0.0
+P20,Squat,2,10,10,10.0,0,,P20,squat,2,P20,Squat,2,10.0,10.0,0.0,both,0.0,0.0,0.0,0.0,0.0,0.0
+P20,Squat,3,10,10,10.0,0,,P20,squat,3,P20,Squat,3,11.0,11.0,0.0,both,-1.0,1.0,-1.0,1.0,0.0,0.0
+P20,Lateral Raise,1,8,9,8.0,1,,P20,lateral raise,1,P20,Lateral Raise,1,8.0,8.0,0.0,both,1.0,1.0,0.0,0.0,1.0,1.0
+P20,Lateral Raise,2,8,8,8.0,0,,P20,lateral raise,2,P20,Lateral Raise,2,7.0,7.0,0.0,both,1.0,1.0,1.0,1.0,0.0,0.0
+P21,Hammer Curl,1,10,12,10.0,2,,P21,hammer curl,1,P21,Hummer Curl,1,10.0,10.0,0.0,both,2.0,2.0,0.0,0.0,2.0,2.0
+P21,Hammer Curl,2,10,11,10.0,1,,P21,hammer curl,2,P21,Hummer Curl,2,10.0,10.0,0.0,both,1.0,1.0,0.0,0.0,1.0,1.0
+P21,Squat,1,10,1,0.0,1,,P21,squat,1,P21,Squats,1,10.0,10.0,0.0,both,-9.0,9.0,-10.0,10.0,1.0,1.0
+P21,Squat,2,10,4,1.0,3,,P21,squat,2,P21,Squats,2,11.0,11.0,0.0,both,-7.0,7.0,-10.0,10.0,3.0,3.0
+P21,Lateral Raise,1,10,10,10.0,0,,P21,lateral raise,1,P21,Lateral Raises,1,11.0,11.0,0.0,both,-1.0,1.0,-1.0,1.0,0.0,0.0
+P21,Lateral Raise,2,10,10,10.0,0,,P21,lateral raise,2,P21,Lateral Raises,2,11.0,11.0,0.0,both,-1.0,1.0,-1.0,1.0,0.0,0.0
+P21,Leg Raises,1,5,7,5.0,2,,P21,leg raises,1,P21,Leg Raises,1,5.0,5.0,0.0,both,2.0,2.0,0.0,0.0,2.0,2.0
+P21,Leg Raises,2,5,7,5.0,2,,P21,leg raises,2,P21,Leg Raises,2,5.0,5.0,0.0,both,2.0,2.0,0.0,0.0,2.0,2.0
+P21,Chest Fly Machine,1,10,17,8.0,9,,P21,chest fly machine,1,P21,Chest Fly Machine,1,10.0,10.0,0.0,both,7.0,7.0,-2.0,2.0,9.0,9.0
+P21,Chest Fly Machine,2,8,10,8.0,2,,P21,chest fly machine,2,P21,Chest Fly Machine,2,9.0,9.0,0.0,both,1.0,1.0,-1.0,1.0,2.0,2.0

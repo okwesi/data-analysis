@@ -1,0 +1,94 @@
+ROBOT REP COUNTER ACCURACY ANALYSIS
+==============================================================================
+
+DATA STATUS
+------------------------------------------------------------------------------
+Robot records in input: 142
+Usable matched Robot/Video sets: 132
+Robot sets currently without matching video ground truth: 8
+Robot records excluded because of duplicate keys: 2
+Video records excluded because of duplicate keys: 0
+
+PRIMARY ACCURACY DEFINITION
+------------------------------------------------------------------------------
+Count Accuracy (%) = 100 × [1 - Σ|Robot Count - Video Count| / ΣVideo Count]
+This is 100 minus weighted absolute percentage error (WAPE).
+Missing video rows are excluded until ground-truth values are added.
+Robot and video records are matched using Participant + Exercise + Set.
+
+OVERALL RESULTS
+------------------------------------------------------------------------------
+
+Total Rep Count
+  Valid sets: 132
+  Count accuracy: 68.05%
+  Mean absolute error (MAE): 3.72 reps
+  Mean signed error (Robot - Video): 0.90 reps
+  Exact-match rate: 31.8%
+  Within ±1 rep: 54.5%
+
+Correct Rep Count
+  Valid sets: 131
+  Count accuracy: 79.43%
+  Mean absolute error (MAE): 2.26 reps
+  Mean signed error (Robot - Video): -1.57 reps
+  Exact-match rate: 46.6%
+  Within ±1 rep: 66.4%
+
+Incorrect Rep Count
+  Valid sets: 132
+  Count accuracy: 0.00%
+  Mean absolute error (MAE): 2.51 reps
+  Mean signed error (Robot - Video): 2.36 reps
+  Exact-match rate: 36.4%
+  Within ±1 rep: 55.3%
+
+PER-EXERCISE TOTAL REP COUNT ACCURACY
+------------------------------------------------------------------------------
+Chest Fly Machine: N=11, accuracy=72.50%, MAE=3.00, exact=18.2%, within ±1=36.4%
+Hammer Curl: N=27, accuracy=84.88%, MAE=1.63, exact=40.7%, within ±1=70.4%
+Lateral Raise: N=15, accuracy=86.23%, MAE=1.27, exact=33.3%, within ±1=80.0%
+Leg Extension: N=10, accuracy=77.78%, MAE=2.60, exact=10.0%, within ±1=40.0%
+Leg Raises: N=5, accuracy=72.73%, MAE=2.40, exact=20.0%, within ±1=40.0%
+Push-up: N=15, accuracy=46.99%, MAE=5.87, exact=20.0%, within ±1=46.7%
+Russian Twist: N=6, accuracy=39.62%, MAE=21.33, exact=0.0%, within ±1=0.0%
+Squat: N=26, accuracy=88.66%, MAE=1.27, exact=65.4%, within ±1=80.8%
+T-Bar Row: N=4, accuracy=0.00%, MAE=13.50, exact=0.0%, within ±1=0.0%
+Tricep Pushdown: N=13, accuracy=59.70%, MAE=4.15, exact=15.4%, within ±1=23.1%
+
+IMPORTANT INTERPRETATION
+------------------------------------------------------------------------------
+These results measure agreement between aggregate robot counts and human video counts.
+They do not establish per-repetition classification precision, recall, or F1 because individual robot decisions are not temporally aligned to individual video repetitions in this dataset.
+
+==============================================================================
+QUALITATIVE NOTES ON INACCURACIES
+==============================================================================
+
+PASTE MANUAL QUALITATIVE EXPLANATION BELOW:
+
+Examples to discuss may include:
+- movements that resembled the intended exercise enough for the exercise classifier to accept them, but did not satisfy the rep counter's movement/form thresholds;
+- participants performing an exercise incorrectly or performing a different movement/exercise;
+- equipment, camera position, range-of-motion, or body-position constraints that affected counting.
+
+
+
+Notes from reviwer
+
+- Bad camera angles affect accuracy
+- insufficient lighting
+- people walking behind and infront of the robot sometimes moves focus to them and adds some reps
+- People not waiting for the robot to tell to start before starting
+
+- tbar row had that accuracy becuase we didnt get the right equipment for the exercise, we had to improvise which didnt help
+- The robot being in one position and not being able to move around to be in better position to see angles also reduced the accuracy
+
+
+Final notes, becuae the gym was a public place and not a lab controlled setting, there was little we could do to not cause 
+incovenience from people that have paid membership, we could not block places and insist they else where, we could not move machines
+to bring them closer to the robot, the robot was on a desk so we couldnt keep moving around to block other people, and even though
+we blocked area during a participant doing the exercise people clained they didnt have time to wait and went ahead to use machines 
+reserved for participants(although the robot still focused on participant they small interruptions caused some reps to be counted). 
+The t-bar row accuracy was near 100% when tested with the right equipment, but with the wrong improvised equipment it didnt work, angles 
+were bad, people performed it bad and there was nothing we could do about it

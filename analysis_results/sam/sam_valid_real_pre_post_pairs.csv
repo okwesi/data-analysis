@@ -1,0 +1,14 @@
+Participant ID,Pre Arousal Label,Post Arousal Label,Pre Valence Label,Post Valence Label,Has Pre-Study SAM,Pre Arousal Score,Post Arousal Score,Pre Valence Score,Post Valence Score,Arousal Change,Valence Change,Arousal Absolute Change,Valence Absolute Change,Arousal Change Direction,Valence Change Direction,Change Score Source
+P1,Neutral,Calm,Neutral,Pleasant,True,3,2,3,4,-1,1,1,1,Calmer,More pleasant,Real Pre + Post
+P10,Very Calm,Very Calm,Very Pleasant,Very Pleasant,True,1,1,5,5,0,0,0,0,No change,No change,Real Pre + Post
+P11,Neutral,Excited,Pleasant,Very Pleasant,True,3,4,4,5,1,1,1,1,More excited,More pleasant,Real Pre + Post
+P13,Excited,Excited,Very Pleasant,Pleasant,True,4,4,5,4,0,-1,0,1,No change,Less pleasant,Real Pre + Post
+P14,Excited,Excited,Pleasant,Very Pleasant,True,4,4,4,5,0,1,0,1,No change,More pleasant,Real Pre + Post
+P15,Very Calm,Very Excited,Very Pleasant,Very Pleasant,True,1,5,5,5,4,0,4,0,More excited,No change,Real Pre + Post
+P16,Excited,Excited,Pleasant,Pleasant,True,4,4,4,4,0,0,0,0,No change,No change,Real Pre + Post
+P19,Excited,Neutral,Pleasant,Pleasant,True,4,3,4,4,-1,0,1,0,Calmer,No change,Real Pre + Post
+P2,Excited,Excited,Unpleasant,Pleasant,True,4,4,2,4,0,2,0,2,No change,More pleasant,Real Pre + Post
+P20,Excited,Excited,Pleasant,Pleasant,True,4,4,4,4,0,0,0,0,No change,No change,Real Pre + Post
+P21,Neutral,Neutral,Pleasant,Pleasant,True,3,3,4,4,0,0,0,0,No change,No change,Real Pre + Post
+P3,Neutral,Excited,Very Pleasant,Very Pleasant,True,3,4,5,5,1,0,1,0,More excited,No change,Real Pre + Post
+P8,Excited,Calm,Very Pleasant,Very Pleasant,True,4,2,5,5,-2,0,2,0,Calmer,No change,Real Pre + Post
