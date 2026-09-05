@@ -1,52 +1,47 @@
 """
-Robot Rep Counter Accuracy Analysis
-===================================
+Rep Counter Accuracy Analysis
+=============================
 
-This script compares robot rep-count outputs against human video
-ground truth.
+Designed for an ongoing HRI study comparing robot output with
+human-coded video ground truth.
 
-It is designed for an ONGOING study:
-- Missing video rows are allowed.
-- New rows can be added later.
-- Robot and video data are NOT matched by spreadsheet row position.
-- Records are matched by:
-      Participant ID + Exercise + Set
+IMPORTANT DESIGN DECISIONS
+--------------------------
+1. Robot and video records are NOT compared by spreadsheet row.
+2. They are matched using:
+       Participant ID + Exercise + Set
+3. Missing video ground truth is allowed and is excluded only from
+   the metric that requires it.
+4. Duplicate keys are flagged and excluded rather than guessed.
+5. The PRIMARY metric is Correct Rep Count Accuracy because the
+   system's meaningful output is the number of repetitions accepted
+   as correctly performed.
+6. Total Attempt Count Accuracy is reported as a SECONDARY metric.
+7. The script does NOT dynamically choose whichever metric gives the
+   largest percentage. Both are always reported.
 
-PRIMARY ACCURACY METRIC
------------------------
-Count Accuracy (%) = 100 - WAPE
+COUNT ACCURACY
+--------------
+Count Accuracy (%) =
+    100 * [1 - sum(|Robot - Video|) / sum(Video)]
 
-where:
+This is 100 - WAPE (Weighted Absolute Percentage Error).
 
-    WAPE = sum(|Robot Count - Video Count|) / sum(Video Count)
-
-Therefore:
-
-    Count Accuracy (%) =
-        100 * (1 - sum absolute error / sum video ground-truth reps)
-
-The result is clipped to 0-100%.
-
-This is a COUNTING accuracy measure, not per-repetition classification
-accuracy. Per-repetition precision/recall/F1 cannot be calculated from
-aggregate set-level counts unless individual reps are temporally aligned.
-
-The script also reports:
+Additional agreement measures:
 - Mean Absolute Error (MAE)
+- Mean signed error / bias (Robot - Video)
 - Exact-match rate
 - Within ±1 rep rate
-- Signed bias (Robot - Video)
-- Per-exercise accuracy
 
-QUALITATIVE NOTES
------------------
-The Notes column is NOT used in the numerical calculations.
-A section is left in the TXT report for manually adding explanations
-for inaccuracies later.
+This is set-level COUNT agreement. Precision, recall, and F1 require
+individual repetition-level temporal labels and cannot be correctly
+derived from aggregate set counts alone.
 """
 
-import pandas as pd
-import numpy as np
+import csv
+import math
+import statistics
+from collections import Counter, defaultdict
 from pathlib import Path
 
 
@@ -54,91 +49,58 @@ from pathlib import Path
 # CONFIGURATION
 # ============================================================
 
-INPUT_FILE = "Study Data(Robot vs Video data).csv"
+PREFERRED_INPUT_FILE = "Study Data(Robot vs Video data)(1).csv"
 
 OUTPUT_DIR = Path("analysis_results/rep_counter_accuracy")
 OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
 
 # ============================================================
-# FIND INPUT FILE
+# INPUT FILE
 # ============================================================
 
 def resolve_input_file():
-    preferred = Path(INPUT_FILE)
+    preferred = Path(PREFERRED_INPUT_FILE)
 
     if preferred.exists():
         return preferred
 
-    matches = [
-        p for p in Path(".").glob("*.csv")
-        if "robot" in p.name.lower()
-        and "video" in p.name.lower()
-    ]
+    candidates = sorted(
+        [
+            p for p in Path(".").glob("*.csv")
+            if "robot" in p.name.lower()
+            and "video" in p.name.lower()
+        ],
+        key=lambda p: p.stat().st_mtime,
+        reverse=True,
+    )
 
-    if len(matches) == 1:
-        return matches[0]
+    if len(candidates) == 1:
+        return candidates[0]
+
+    if candidates:
+        print("Multiple Robot-vs-Video CSV files were found:")
+        for p in candidates:
+            print(f" - {p.name}")
+
+        raise FileNotFoundError(
+            "\nRename the cleaned/current file to:\n"
+            f"{PREFERRED_INPUT_FILE}"
+        )
 
     raise FileNotFoundError(
-        "\nCould not find the Robot vs Video CSV.\n\n"
-        "Place this script in the same folder as:\n"
-        f"{INPUT_FILE}\n"
+        "\nCould not find the Robot-vs-Video CSV.\n"
+        f"Expected: {PREFERRED_INPUT_FILE}\n"
     )
 
 
-input_path = resolve_input_file()
-print(f"Using input file: {input_path}")
+INPUT_FILE = resolve_input_file()
+print(f"Using input file: {INPUT_FILE}")
 
 
 # ============================================================
-# LOAD DATA
+# NORMALIZATION
 # ============================================================
-
-df = pd.read_csv(input_path)
-
-required_columns = [
-    "Participant",
-    "Exercise",
-    "Set",
-    "Total Attempts",
-    "Correct Reps",
-    "Incorrect Reps",
-
-    "Participant.1",
-    "Exercise.1",
-    "Set.1",
-    "Total Reps",
-    "Correct Reps.1",
-    "Incorrect Reps.1",
-]
-
-missing_columns = [
-    col for col in required_columns
-    if col not in df.columns
-]
-
-if missing_columns:
-    raise ValueError(
-        "Missing required columns:\n"
-        + "\n".join(missing_columns)
-    )
-
-
-# ============================================================
-# NORMALIZATION HELPERS
-# ============================================================
-
-def normalize_participant(value):
-    if pd.isna(value):
-        return pd.NA
-
-    text = str(value).strip().upper()
-
-    if not text:
-        return pd.NA
-
-    return text
-
 
 EXERCISE_ALIASES = {
     "hummer curl": "hammer curl",
@@ -170,579 +132,604 @@ EXERCISE_ALIASES = {
 }
 
 
-def normalize_exercise(value):
-    if pd.isna(value):
-        return pd.NA
+PRETTY_EXERCISE = {
+    "hammer curl": "Hammer Curl",
+    "lateral raise": "Lateral Raise",
+    "squat": "Squat",
+    "russian twist": "Russian Twist",
+    "leg raises": "Leg Raises",
+    "push-up": "Push-up",
+    "t-bar row": "T-Bar Row",
+    "tricep pushdown": "Tricep Pushdown",
+    "leg extension": "Leg Extension",
+    "chest fly machine": "Chest Fly Machine",
+}
 
-    text = str(value).strip().lower()
+
+def normalize_participant(value):
+    value = (value or "").strip().upper()
+    return value or None
+
+
+def normalize_exercise(value):
+    value = (value or "").strip().lower()
+
+    if not value:
+        return None
+
+    return EXERCISE_ALIASES.get(value, value)
+
+
+def display_exercise(value):
+    return PRETTY_EXERCISE.get(value, str(value).title())
+
+
+def to_number(value):
+    text = str(value or "").strip()
 
     if not text:
-        return pd.NA
+        return None
 
-    return EXERCISE_ALIASES.get(text, text)
+    try:
+        return float(text)
+    except ValueError:
+        return None
 
 
-def pretty_exercise(normalized_name):
-    pretty = {
-        "hammer curl": "Hammer Curl",
-        "lateral raise": "Lateral Raise",
-        "squat": "Squat",
-        "russian twist": "Russian Twist",
-        "leg raises": "Leg Raises",
-        "push-up": "Push-up",
-        "t-bar row": "T-Bar Row",
-        "tricep pushdown": "Tricep Pushdown",
-        "leg extension": "Leg Extension",
-        "chest fly machine": "Chest Fly Machine",
-    }
+def normalize_set(value):
+    number = to_number(value)
 
-    return pretty.get(
-        normalized_name,
-        str(normalized_name).title()
+    if number is None:
+        return None
+
+    if float(number).is_integer():
+        return int(number)
+
+    return number
+
+
+def make_key(participant, exercise, set_number):
+    p = normalize_participant(participant)
+    e = normalize_exercise(exercise)
+    s = normalize_set(set_number)
+
+    if p is None or e is None or s is None:
+        return None
+
+    return (p, e, s)
+
+
+# ============================================================
+# READ CSV BY POSITION
+# ============================================================
+#
+# We intentionally do NOT use column-name suffixes such as Participant.1.
+# The exported CSV contains duplicate header names on the Robot and Video
+# sides. Reading by position is much more stable.
+#
+# Expected layout:
+#   0 Participant       Robot
+#   1 Exercise          Robot
+#   2 Set               Robot
+#   3 Target Reps       Robot
+#   4 Total Attempts    Robot
+#   5 Correct Reps      Robot
+#   6 Incorrect Reps    Robot
+#
+#   7 Participant       Video
+#   8 Exercise          Video
+#   9 Set               Video
+#  10 Total Reps        Video
+#  11 Correct Reps      Video
+#  12 Incorrect Reps    Video
+#
+#  13 Notes
+
+with open(INPUT_FILE, "r", encoding="utf-8-sig", newline="") as f:
+    rows = list(csv.reader(f))
+
+if not rows:
+    raise ValueError("The input CSV is empty.")
+
+header = rows[0]
+data_rows = rows[1:]
+
+if len(header) < 13:
+    raise ValueError(
+        "Expected at least 13 columns in the Robot-vs-Video CSV."
     )
 
 
-# ============================================================
-# BUILD ROBOT TABLE
-# ============================================================
+robot_records = []
+video_records = []
 
-robot_columns = [
-    "Participant",
-    "Exercise",
-    "Set",
-    "Target Reps",
-    "Total Attempts",
-    "Correct Reps",
-    "Incorrect Reps",
-]
+for csv_row_number, row in enumerate(data_rows, start=2):
 
-if "Notes" in df.columns:
-    robot_columns.append("Notes")
+    if len(row) < 14:
+        row = row + [""] * (14 - len(row))
 
-robot = df[robot_columns].copy()
-
-robot["Participant Key"] = (
-    robot["Participant"]
-    .apply(normalize_participant)
-)
-
-robot["Exercise Key"] = (
-    robot["Exercise"]
-    .apply(normalize_exercise)
-)
-
-robot["Set Key"] = pd.to_numeric(
-    robot["Set"],
-    errors="coerce"
-)
-
-for col in [
-    "Target Reps",
-    "Total Attempts",
-    "Correct Reps",
-    "Incorrect Reps",
-]:
-    if col in robot.columns:
-        robot[col] = pd.to_numeric(
-            robot[col],
-            errors="coerce"
-        )
-
-
-# ============================================================
-# BUILD VIDEO GROUND-TRUTH TABLE
-# ============================================================
-
-video = df[
-    [
-        "Participant.1",
-        "Exercise.1",
-        "Set.1",
-        "Total Reps",
-        "Correct Reps.1",
-        "Incorrect Reps.1",
-    ]
-].copy()
-
-video.columns = [
-    "Video Participant",
-    "Video Exercise",
-    "Video Set",
-    "Video Total Reps",
-    "Video Correct Reps",
-    "Video Incorrect Reps",
-]
-
-video["Participant Key"] = (
-    video["Video Participant"]
-    .apply(normalize_participant)
-)
-
-video["Exercise Key"] = (
-    video["Video Exercise"]
-    .apply(normalize_exercise)
-)
-
-video["Set Key"] = pd.to_numeric(
-    video["Video Set"],
-    errors="coerce"
-)
-
-for col in [
-    "Video Total Reps",
-    "Video Correct Reps",
-    "Video Incorrect Reps",
-]:
-    video[col] = pd.to_numeric(
-        video[col],
-        errors="coerce"
+    robot_key = make_key(
+        row[0],
+        row[1],
+        row[2],
     )
 
+    if robot_key is not None:
+        robot_records.append({
+            "Key": robot_key,
+            "CSV Row": csv_row_number,
+            "Participant": normalize_participant(row[0]),
+            "Exercise": normalize_exercise(row[1]),
+            "Set": normalize_set(row[2]),
+            "Target Reps": to_number(row[3]),
+            "Total Attempts": to_number(row[4]),
+            "Correct Reps": to_number(row[5]),
+            "Incorrect Reps": to_number(row[6]),
+            "Notes": row[13].strip(),
+        })
 
-# ============================================================
-# REMOVE EMPTY / MALFORMED VIDEO RECORDS
-# ============================================================
+    video_key = make_key(
+        row[7],
+        row[8],
+        row[9],
+    )
 
-valid_robot_exercises = set(
-    robot["Exercise Key"]
-    .dropna()
-    .unique()
-)
-
-video_valid_key_mask = (
-    video["Participant Key"].notna()
-    & video["Exercise Key"].notna()
-    & video["Set Key"].notna()
-    & video["Exercise Key"].isin(valid_robot_exercises)
-)
-
-malformed_or_empty_video = (
-    video.loc[~video_valid_key_mask]
-    .copy()
-)
-
-video = (
-    video.loc[video_valid_key_mask]
-    .copy()
-)
+    if video_key is not None:
+        video_records.append({
+            "Key": video_key,
+            "CSV Row": csv_row_number,
+            "Participant": normalize_participant(row[7]),
+            "Exercise": normalize_exercise(row[8]),
+            "Set": normalize_set(row[9]),
+            "Total Reps": to_number(row[10]),
+            "Correct Reps": to_number(row[11]),
+            "Incorrect Reps": to_number(row[12]),
+        })
 
 
 # ============================================================
 # DUPLICATE KEY AUDIT
 # ============================================================
-#
-# A duplicate Participant + Exercise + Set makes matching ambiguous.
-# All duplicated keys are EXCLUDED from accuracy until corrected.
 
-key_columns = [
-    "Participant Key",
-    "Exercise Key",
-    "Set Key",
+robot_key_counts = Counter(
+    record["Key"]
+    for record in robot_records
+)
+
+video_key_counts = Counter(
+    record["Key"]
+    for record in video_records
+)
+
+
+robot_duplicates = [
+    record for record in robot_records
+    if robot_key_counts[record["Key"]] > 1
 ]
 
-robot_duplicate_mask = (
-    robot.duplicated(
-        subset=key_columns,
-        keep=False
-    )
+video_duplicates = [
+    record for record in video_records
+    if video_key_counts[record["Key"]] > 1
+]
+
+
+# Only unambiguous records enter the quantitative analysis.
+robot_map = {
+    record["Key"]: record
+    for record in robot_records
+    if robot_key_counts[record["Key"]] == 1
+}
+
+video_map = {
+    record["Key"]: record
+    for record in video_records
+    if video_key_counts[record["Key"]] == 1
+}
+
+
+robot_keys = set(robot_map)
+video_keys = set(video_map)
+
+matched_keys = sorted(
+    robot_keys & video_keys
 )
 
-video_duplicate_mask = (
-    video.duplicated(
-        subset=key_columns,
-        keep=False
-    )
+robot_only_keys = sorted(
+    robot_keys - video_keys
 )
 
-robot_duplicates = (
-    robot.loc[robot_duplicate_mask]
-    .copy()
-)
-
-video_duplicates = (
-    video.loc[video_duplicate_mask]
-    .copy()
-)
-
-robot_clean = (
-    robot.loc[~robot_duplicate_mask]
-    .copy()
-)
-
-video_clean = (
-    video.loc[~video_duplicate_mask]
-    .copy()
-)
-
-
-# ============================================================
-# MATCH ROBOT TO VIDEO BY PARTICIPANT + EXERCISE + SET
-# ============================================================
-
-video_for_merge = video_clean[
-    [
-        "Participant Key",
-        "Exercise Key",
-        "Set Key",
-        "Video Participant",
-        "Video Exercise",
-        "Video Set",
-        "Video Total Reps",
-        "Video Correct Reps",
-        "Video Incorrect Reps",
-    ]
-].copy()
-
-matched = robot_clean.merge(
-    video_for_merge,
-    on=key_columns,
-    how="left",
-    indicator=True,
-    validate="one_to_one",
-)
-
-matched["Exercise"] = (
-    matched["Exercise Key"]
-    .apply(pretty_exercise)
-)
-
-matched_video_mask = (
-    matched["_merge"] == "both"
-)
-
-unmatched_robot_rows = (
-    matched.loc[~matched_video_mask]
-    .copy()
-)
-
-matched = (
-    matched.loc[matched_video_mask]
-    .copy()
+video_only_keys = sorted(
+    video_keys - robot_keys
 )
 
 
 # ============================================================
-# ACCURACY FUNCTIONS
+# BUILD MATCHED SET TABLE
 # ============================================================
 
-def count_metrics(data, robot_col, video_col):
-    """
-    Calculate count-level comparison metrics.
+matched_sets = []
 
-    Accuracy = 100 - WAPE
-             = 100 * (1 - total absolute error / total ground truth)
+for key in matched_keys:
+    robot = robot_map[key]
+    video = video_map[key]
 
-    Rows missing either required value are excluded.
-    """
+    matched_sets.append({
+        "Participant": key[0],
+        "Exercise": display_exercise(key[1]),
+        "Exercise Key": key[1],
+        "Set": key[2],
 
-    valid = data[
-        data[robot_col].notna()
-        & data[video_col].notna()
-    ].copy()
+        "Robot CSV Row": robot["CSV Row"],
+        "Video CSV Row": video["CSV Row"],
 
-    if valid.empty:
+        "Target Reps": robot["Target Reps"],
+
+        "Robot Total Attempts": robot["Total Attempts"],
+        "Video Total Reps": video["Total Reps"],
+
+        "Robot Correct Reps": robot["Correct Reps"],
+        "Video Correct Reps": video["Correct Reps"],
+
+        "Robot Incorrect Reps": robot["Incorrect Reps"],
+        "Video Incorrect Reps": video["Incorrect Reps"],
+
+        "Notes": robot["Notes"],
+    })
+
+
+# ============================================================
+# COUNT METRICS
+# ============================================================
+
+def calculate_metrics(records, robot_field, video_field):
+    valid = []
+
+    for row in records:
+        robot_value = row[robot_field]
+        video_value = row[video_field]
+
+        if robot_value is None or video_value is None:
+            continue
+
+        error = robot_value - video_value
+
+        valid.append({
+            "Robot": robot_value,
+            "Video": video_value,
+            "Signed Error": error,
+            "Absolute Error": abs(error),
+        })
+
+    if not valid:
         return {
             "Valid Sets": 0,
-            "Robot Total": np.nan,
-            "Video Total": np.nan,
-            "Absolute Error Sum": np.nan,
-            "MAE": np.nan,
-            "Mean Signed Error": np.nan,
-            "Count Accuracy %": np.nan,
+            "Robot Total": None,
+            "Video Total": None,
+            "Absolute Error Sum": None,
+            "WAPE %": None,
+            "Count Accuracy %": None,
+            "MAE": None,
+            "Mean Signed Error": None,
             "Exact Match n": 0,
-            "Exact Match %": np.nan,
+            "Exact Match %": None,
             "Within ±1 n": 0,
-            "Within ±1 %": np.nan,
+            "Within ±1 %": None,
         }
-
-    valid["Signed Error"] = (
-        valid[robot_col] - valid[video_col]
-    )
-
-    valid["Absolute Error"] = (
-        valid["Signed Error"].abs()
-    )
 
     n = len(valid)
 
-    robot_total = valid[robot_col].sum()
-    video_total = valid[video_col].sum()
-    absolute_error_sum = valid["Absolute Error"].sum()
+    robot_total = sum(
+        row["Robot"]
+        for row in valid
+    )
+
+    video_total = sum(
+        row["Video"]
+        for row in valid
+    )
+
+    absolute_error_sum = sum(
+        row["Absolute Error"]
+        for row in valid
+    )
 
     if video_total > 0:
-        accuracy = (
-            100
-            * (
-                1
-                - absolute_error_sum / video_total
-            )
+        wape = (
+            absolute_error_sum
+            / video_total
+            * 100
         )
 
+        accuracy = 100 - wape
+
+        # A count accuracy below 0% has no useful interpretation.
         accuracy = max(
             0.0,
             min(100.0, accuracy)
         )
     else:
-        accuracy = np.nan
+        wape = None
+        accuracy = None
 
-    exact_n = int(
-        (valid["Absolute Error"] == 0).sum()
+    mae = statistics.mean(
+        row["Absolute Error"]
+        for row in valid
     )
 
-    within_one_n = int(
-        (valid["Absolute Error"] <= 1).sum()
+    bias = statistics.mean(
+        row["Signed Error"]
+        for row in valid
+    )
+
+    exact_n = sum(
+        row["Absolute Error"] == 0
+        for row in valid
+    )
+
+    within_one_n = sum(
+        row["Absolute Error"] <= 1
+        for row in valid
     )
 
     return {
         "Valid Sets": n,
-        "Robot Total": float(robot_total),
-        "Video Total": float(video_total),
-        "Absolute Error Sum":
-            float(absolute_error_sum),
-        "MAE":
-            float(valid["Absolute Error"].mean()),
-        "Mean Signed Error":
-            float(valid["Signed Error"].mean()),
-        "Count Accuracy %":
-            float(accuracy),
+        "Robot Total": robot_total,
+        "Video Total": video_total,
+        "Absolute Error Sum": absolute_error_sum,
+        "WAPE %": wape,
+        "Count Accuracy %": accuracy,
+        "MAE": mae,
+        "Mean Signed Error": bias,
         "Exact Match n": exact_n,
-        "Exact Match %":
-            exact_n / n * 100,
+        "Exact Match %": exact_n / n * 100,
         "Within ±1 n": within_one_n,
-        "Within ±1 %":
-            within_one_n / n * 100,
+        "Within ±1 %": within_one_n / n * 100,
     }
 
 
 # ============================================================
-# OVERALL ANALYSIS
+# OVERALL RESULTS
 # ============================================================
 
-overall_total = count_metrics(
-    matched,
-    "Total Attempts",
-    "Video Total Reps",
-)
-
-overall_correct = count_metrics(
-    matched,
-    "Correct Reps",
+correct_metrics = calculate_metrics(
+    matched_sets,
+    "Robot Correct Reps",
     "Video Correct Reps",
 )
 
-# For incorrect reps we avoid calling the percentage result a main
-# "accuracy" because many ground-truth incorrect counts are zero.
-# MAE/exact agreement are still useful.
-overall_incorrect = count_metrics(
-    matched,
-    "Incorrect Reps",
+total_metrics = calculate_metrics(
+    matched_sets,
+    "Robot Total Attempts",
+    "Video Total Reps",
+)
+
+incorrect_metrics = calculate_metrics(
+    matched_sets,
+    "Robot Incorrect Reps",
     "Video Incorrect Reps",
 )
 
 
-overall_summary = pd.DataFrame([
+overall_results = [
     {
-        "Measure": "Total Rep Count",
-        **overall_total,
-    },
-    {
+        "Role": "PRIMARY",
         "Measure": "Correct Rep Count",
-        **overall_correct,
+        **correct_metrics,
     },
     {
-        "Measure": "Incorrect Rep Count",
-        **overall_incorrect,
+        "Role": "SECONDARY",
+        "Measure": "Total Attempt Count",
+        **total_metrics,
     },
-])
+    {
+        "Role": "DIAGNOSTIC",
+        "Measure": "Incorrect Rep Count",
+        **incorrect_metrics,
+    },
+]
 
 
 # ============================================================
-# PER-EXERCISE ANALYSIS
+# ADD SET-LEVEL ERRORS
 # ============================================================
 
-exercise_rows = []
+for row in matched_sets:
 
-for exercise, group in matched.groupby(
-    "Exercise",
-    sort=True
-):
-    total_result = count_metrics(
-        group,
-        "Total Attempts",
-        "Video Total Reps",
-    )
+    if (
+        row["Robot Correct Reps"] is not None
+        and row["Video Correct Reps"] is not None
+    ):
+        row["Correct Rep Error"] = (
+            row["Robot Correct Reps"]
+            - row["Video Correct Reps"]
+        )
 
-    correct_result = count_metrics(
+        row["Correct Rep Absolute Error"] = abs(
+            row["Correct Rep Error"]
+        )
+    else:
+        row["Correct Rep Error"] = None
+        row["Correct Rep Absolute Error"] = None
+
+    if (
+        row["Robot Total Attempts"] is not None
+        and row["Video Total Reps"] is not None
+    ):
+        row["Total Attempt Error"] = (
+            row["Robot Total Attempts"]
+            - row["Video Total Reps"]
+        )
+
+        row["Total Attempt Absolute Error"] = abs(
+            row["Total Attempt Error"]
+        )
+    else:
+        row["Total Attempt Error"] = None
+        row["Total Attempt Absolute Error"] = None
+
+
+# ============================================================
+# PER-EXERCISE RESULTS
+# ============================================================
+
+exercise_groups = defaultdict(list)
+
+for row in matched_sets:
+    exercise_groups[row["Exercise"]].append(row)
+
+
+per_exercise_results = []
+
+for exercise in sorted(exercise_groups):
+    group = exercise_groups[exercise]
+
+    correct = calculate_metrics(
         group,
-        "Correct Reps",
+        "Robot Correct Reps",
         "Video Correct Reps",
     )
 
-    exercise_rows.append({
+    total = calculate_metrics(
+        group,
+        "Robot Total Attempts",
+        "Video Total Reps",
+    )
+
+    per_exercise_results.append({
         "Exercise": exercise,
 
-        "Total Valid Sets":
-            total_result["Valid Sets"],
+        "Correct Valid Sets":
+            correct["Valid Sets"],
 
-        "Total Count Accuracy %":
-            round(
-                total_result["Count Accuracy %"],
-                2
-            )
-            if pd.notna(
-                total_result["Count Accuracy %"]
-            )
-            else np.nan,
-
-        "Total Count MAE":
-            round(total_result["MAE"], 3)
-            if pd.notna(total_result["MAE"])
-            else np.nan,
-
-        "Total Exact Match %":
-            round(
-                total_result["Exact Match %"],
-                1
-            )
-            if pd.notna(
-                total_result["Exact Match %"]
-            )
-            else np.nan,
-
-        "Total Within ±1 %":
-            round(
-                total_result["Within ±1 %"],
-                1
-            )
-            if pd.notna(
-                total_result["Within ±1 %"]
-            )
-            else np.nan,
-
-        "Correct Count Valid Sets":
-            correct_result["Valid Sets"],
-
-        "Correct Rep Count Accuracy %":
-            round(
-                correct_result["Count Accuracy %"],
-                2
-            )
-            if pd.notna(
-                correct_result["Count Accuracy %"]
-            )
-            else np.nan,
+        "Correct Rep Accuracy %":
+            correct["Count Accuracy %"],
 
         "Correct Rep MAE":
-            round(correct_result["MAE"], 3)
-            if pd.notna(correct_result["MAE"])
-            else np.nan,
+            correct["MAE"],
 
         "Correct Exact Match %":
-            round(
-                correct_result["Exact Match %"],
-                1
-            )
-            if pd.notna(
-                correct_result["Exact Match %"]
-            )
-            else np.nan,
+            correct["Exact Match %"],
 
         "Correct Within ±1 %":
-            round(
-                correct_result["Within ±1 %"],
-                1
-            )
-            if pd.notna(
-                correct_result["Within ±1 %"]
-            )
-            else np.nan,
+            correct["Within ±1 %"],
+
+        "Total Valid Sets":
+            total["Valid Sets"],
+
+        "Total Attempt Accuracy %":
+            total["Count Accuracy %"],
+
+        "Total Attempt MAE":
+            total["MAE"],
+
+        "Total Exact Match %":
+            total["Exact Match %"],
+
+        "Total Within ±1 %":
+            total["Within ±1 %"],
     })
 
 
-per_exercise = pd.DataFrame(
-    exercise_rows
-)
+# ============================================================
+# CSV WRITER
+# ============================================================
+
+def write_csv(path, rows):
+    if not rows:
+        path.write_text("", encoding="utf-8")
+        return
+
+    columns = list(rows[0].keys())
+
+    with open(
+        path,
+        "w",
+        encoding="utf-8",
+        newline=""
+    ) as f:
+        writer = csv.DictWriter(
+            f,
+            fieldnames=columns,
+        )
+
+        writer.writeheader()
+        writer.writerows(rows)
 
 
 # ============================================================
-# PARTICIPANT / SET-LEVEL ERRORS
+# SAVE OUTPUTS
 # ============================================================
 
-matched["Total Count Error"] = (
-    matched["Total Attempts"]
-    - matched["Video Total Reps"]
-)
-
-matched["Total Count Absolute Error"] = (
-    matched["Total Count Error"].abs()
-)
-
-matched["Correct Count Error"] = (
-    matched["Correct Reps"]
-    - matched["Video Correct Reps"]
-)
-
-matched["Correct Count Absolute Error"] = (
-    matched["Correct Count Error"].abs()
-)
-
-matched["Incorrect Count Error"] = (
-    matched["Incorrect Reps"]
-    - matched["Video Incorrect Reps"]
-)
-
-matched["Incorrect Count Absolute Error"] = (
-    matched["Incorrect Count Error"].abs()
-)
-
-
-# ============================================================
-# SAVE RESULTS
-# ============================================================
-
-overall_summary.to_csv(
+write_csv(
     OUTPUT_DIR / "rep_accuracy_overall_summary.csv",
-    index=False
+    overall_results,
 )
 
-per_exercise.to_csv(
+write_csv(
     OUTPUT_DIR / "rep_accuracy_by_exercise.csv",
-    index=False
+    per_exercise_results,
 )
 
-matched.to_csv(
+write_csv(
     OUTPUT_DIR / "rep_accuracy_matched_sets.csv",
-    index=False
+    matched_sets,
 )
 
-unmatched_robot_rows.to_csv(
-    OUTPUT_DIR / "rep_accuracy_missing_video_rows.csv",
-    index=False
-)
-
-robot_duplicates.to_csv(
+write_csv(
     OUTPUT_DIR / "rep_accuracy_duplicate_robot_keys.csv",
-    index=False
+    robot_duplicates,
 )
 
-video_duplicates.to_csv(
+write_csv(
     OUTPUT_DIR / "rep_accuracy_duplicate_video_keys.csv",
-    index=False
+    video_duplicates,
 )
 
-malformed_or_empty_video.to_csv(
-    OUTPUT_DIR / "rep_accuracy_invalid_or_empty_video_records.csv",
-    index=False
+
+unmatched_rows = []
+
+for key in robot_only_keys:
+    record = robot_map[key]
+
+    unmatched_rows.append({
+        "Side": "Robot only",
+        "Participant": key[0],
+        "Exercise": display_exercise(key[1]),
+        "Set": key[2],
+        "CSV Row": record["CSV Row"],
+    })
+
+for key in video_only_keys:
+    record = video_map[key]
+
+    unmatched_rows.append({
+        "Side": "Video only",
+        "Participant": key[0],
+        "Exercise": display_exercise(key[1]),
+        "Set": key[2],
+        "CSV Row": record["CSV Row"],
+    })
+
+
+write_csv(
+    OUTPUT_DIR / "rep_accuracy_unmatched_keys.csv",
+    unmatched_rows,
 )
 
 
 # ============================================================
-# HUMAN-READABLE REPORT
+# REPORT
 # ============================================================
 
 def fmt(value, decimals=2):
-    if pd.isna(value):
+    if value is None:
         return "NA"
+
+    try:
+        if math.isnan(value):
+            return "NA"
+    except TypeError:
+        pass
 
     return f"{value:.{decimals}f}"
 
@@ -750,33 +737,97 @@ def fmt(value, decimals=2):
 report = []
 
 report.append("ROBOT REP COUNTER ACCURACY ANALYSIS")
-report.append("=" * 78)
+report.append("=" * 80)
 report.append("")
 
-report.append("DATA STATUS")
-report.append("-" * 78)
+report.append("DATA MATCHING")
+report.append("-" * 80)
 report.append(
-    f"Robot records in input: {len(robot)}"
+    f"Robot records with valid keys: {len(robot_records)}"
 )
 report.append(
-    f"Usable matched Robot/Video sets: {len(matched)}"
+    f"Video records with valid keys: {len(video_records)}"
 )
 report.append(
-    f"Robot sets currently without matching video ground truth: "
-    f"{len(unmatched_robot_rows)}"
+    f"Matched unambiguous sets: {len(matched_sets)}"
 )
 report.append(
-    f"Robot records excluded because of duplicate keys: "
-    f"{len(robot_duplicates)}"
+    f"Robot-only unmatched keys: {len(robot_only_keys)}"
 )
 report.append(
-    f"Video records excluded because of duplicate keys: "
-    f"{len(video_duplicates)}"
+    f"Video-only unmatched keys: {len(video_only_keys)}"
+)
+report.append(
+    f"Robot records involved in duplicate keys: {len(robot_duplicates)}"
+)
+report.append(
+    f"Video records involved in duplicate keys: {len(video_duplicates)}"
 )
 report.append("")
 
-report.append("PRIMARY ACCURACY DEFINITION")
-report.append("-" * 78)
+report.append("PRIMARY RESULT: CORRECT REP COUNT ACCURACY")
+report.append("-" * 80)
+report.append(
+    "This is the primary metric because the system's meaningful "
+    "output is whether a movement is accepted as a correctly "
+    "performed repetition."
+)
+report.append(
+    f"Valid sets: {correct_metrics['Valid Sets']}"
+)
+report.append(
+    f"Correct rep count accuracy: "
+    f"{fmt(correct_metrics['Count Accuracy %'])}%"
+)
+report.append(
+    f"MAE: {fmt(correct_metrics['MAE'])} reps/set"
+)
+report.append(
+    f"Mean signed error (Robot - Video): "
+    f"{fmt(correct_metrics['Mean Signed Error'])} reps/set"
+)
+report.append(
+    f"Exact-match rate: "
+    f"{fmt(correct_metrics['Exact Match %'], 1)}%"
+)
+report.append(
+    f"Within ±1 rep: "
+    f"{fmt(correct_metrics['Within ±1 %'], 1)}%"
+)
+report.append("")
+
+report.append("SECONDARY RESULT: TOTAL ATTEMPT COUNT")
+report.append("-" * 80)
+report.append(
+    "Total attempts include movements that may resemble the exercise "
+    "but can legitimately be rejected by the form/rep logic."
+)
+report.append(
+    f"Valid sets: {total_metrics['Valid Sets']}"
+)
+report.append(
+    f"Total attempt count accuracy: "
+    f"{fmt(total_metrics['Count Accuracy %'])}%"
+)
+report.append(
+    f"MAE: {fmt(total_metrics['MAE'])} reps/set"
+)
+report.append(
+    f"Mean signed error (Robot - Video): "
+    f"{fmt(total_metrics['Mean Signed Error'])} reps/set"
+)
+report.append(
+    f"Exact-match rate: "
+    f"{fmt(total_metrics['Exact Match %'], 1)}%"
+)
+report.append(
+    f"Within ±1 rep: "
+    f"{fmt(total_metrics['Within ±1 %'], 1)}%"
+)
+report.append("")
+
+report.append("ACCURACY FORMULA")
+report.append("-" * 80)
 report.append(
     "Count Accuracy (%) = "
     "100 × [1 - Σ|Robot Count - Video Count| / ΣVideo Count]"
@@ -784,97 +835,53 @@ report.append(
 report.append(
     "This is 100 minus weighted absolute percentage error (WAPE)."
 )
-report.append(
-    "Missing video rows are excluded until ground-truth values are added."
-)
-report.append(
-    "Robot and video records are matched using Participant + Exercise + Set."
-)
 report.append("")
 
-report.append("OVERALL RESULTS")
-report.append("-" * 78)
+report.append("PER-EXERCISE CORRECT REP ACCURACY")
+report.append("-" * 80)
 
-for _, row in overall_summary.iterrows():
-    report.append("")
-    report.append(row["Measure"])
-    report.append(
-        f"  Valid sets: {int(row['Valid Sets'])}"
-    )
-    report.append(
-        f"  Count accuracy: "
-        f"{fmt(row['Count Accuracy %'])}%"
-    )
-    report.append(
-        f"  Mean absolute error (MAE): "
-        f"{fmt(row['MAE'])} reps"
-    )
-    report.append(
-        f"  Mean signed error (Robot - Video): "
-        f"{fmt(row['Mean Signed Error'])} reps"
-    )
-    report.append(
-        f"  Exact-match rate: "
-        f"{fmt(row['Exact Match %'], 1)}%"
-    )
-    report.append(
-        f"  Within ±1 rep: "
-        f"{fmt(row['Within ±1 %'], 1)}%"
-    )
-
-report.append("")
-report.append("PER-EXERCISE TOTAL REP COUNT ACCURACY")
-report.append("-" * 78)
-
-for _, row in per_exercise.iterrows():
+for row in per_exercise_results:
     report.append(
         f"{row['Exercise']}: "
-        f"N={int(row['Total Valid Sets'])}, "
-        f"accuracy={fmt(row['Total Count Accuracy %'])}%, "
-        f"MAE={fmt(row['Total Count MAE'])}, "
-        f"exact={fmt(row['Total Exact Match %'], 1)}%, "
-        f"within ±1={fmt(row['Total Within ±1 %'], 1)}%"
+        f"N={row['Correct Valid Sets']}, "
+        f"accuracy={fmt(row['Correct Rep Accuracy %'])}%, "
+        f"MAE={fmt(row['Correct Rep MAE'])}, "
+        f"exact={fmt(row['Correct Exact Match %'], 1)}%, "
+        f"within ±1={fmt(row['Correct Within ±1 %'], 1)}%"
     )
 
 report.append("")
-report.append("IMPORTANT INTERPRETATION")
-report.append("-" * 78)
-report.append(
-    "These results measure agreement between aggregate robot counts "
-    "and human video counts."
-)
-report.append(
-    "They do not establish per-repetition classification precision, "
-    "recall, or F1 because individual robot decisions are not temporally "
-    "aligned to individual video repetitions in this dataset."
-)
-report.append("")
 
-report.append("=" * 78)
-report.append("QUALITATIVE NOTES ON INACCURACIES")
-report.append("=" * 78)
+if unmatched_rows or robot_duplicates or video_duplicates:
+    report.append("DATA QUALITY WARNING")
+    report.append("-" * 80)
+    report.append(
+        "Some keys are still unmatched or duplicated. These records "
+        "are excluded rather than guessed. See the audit CSV files."
+    )
+    report.append("")
+
+report.append("=" * 80)
+report.append("QUALITATIVE EXPLANATION OF INACCURACIES")
+report.append("=" * 80)
 report.append("")
 report.append(
-    "PASTE MANUAL QUALITATIVE EXPLANATION BELOW:"
+    "PASTE / EDIT YOUR MANUAL VIDEO-REVIEW CONCLUSION BELOW:"
 )
 report.append("")
 report.append(
-    "Examples to discuss may include:"
+    "- Some movements resembled the intended exercise enough for the "
+    "exercise classifier to accept the exercise, but did not satisfy "
+    "the repetition/form thresholds and were therefore rejected."
 )
 report.append(
-    "- movements that resembled the intended exercise enough for the "
-    "exercise classifier to accept them, but did not satisfy the rep "
-    "counter's movement/form thresholds;"
+    "- Some participants performed the movement incorrectly or "
+    "performed a substantially different movement."
 )
 report.append(
-    "- participants performing an exercise incorrectly or performing a "
-    "different movement/exercise;"
+    "- Equipment constraints, range of motion, camera position, and "
+    "body position may explain some additional count discrepancies."
 )
-report.append(
-    "- equipment, camera position, range-of-motion, or body-position "
-    "constraints that affected counting."
-)
-report.append("")
 report.append("")
 report.append("")
 report.append("")
@@ -884,13 +891,13 @@ report_text = "\n".join(report)
 with open(
     OUTPUT_DIR / "rep_accuracy_analysis_report.txt",
     "w",
-    encoding="utf-8"
+    encoding="utf-8",
 ) as f:
     f.write(report_text)
 
 
 # ============================================================
-# PRINT REPORT
+# PRINT
 # ============================================================
 
 print()

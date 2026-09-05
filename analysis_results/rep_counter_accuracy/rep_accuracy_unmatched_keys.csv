@@ -1,0 +1,13 @@
+Side,Participant,Exercise,Set,CSV Row
+Robot only,P10,Russian Twist,2,78
+Robot only,P12,Tricep Pushdown,3,85
+Robot only,P14,Chest Fly Machine,2,102
+Robot only,P4,Chest Fly Machine,3,41
+Robot only,P4,Lateral Raise,3,30
+Robot only,P4,Squat,3,24
+Robot only,P7,Russian Twist,3,52
+Video only,P12,Tricep Pushdown,1,84
+Video only,P12,Tricep Pushdown,2,85
+Video only,P4,Leg Raises,1,30
+Video only,P7,Russian Twist,1,51
+Video only,P9,Push-up,2,67

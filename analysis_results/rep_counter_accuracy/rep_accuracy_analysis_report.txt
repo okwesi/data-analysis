@@ -1,76 +1,67 @@
 ROBOT REP COUNTER ACCURACY ANALYSIS
-==============================================================================
+================================================================================
 
-DATA STATUS
-------------------------------------------------------------------------------
-Robot records in input: 142
-Usable matched Robot/Video sets: 132
-Robot sets currently without matching video ground truth: 8
-Robot records excluded because of duplicate keys: 2
-Video records excluded because of duplicate keys: 0
+DATA MATCHING
+--------------------------------------------------------------------------------
+Robot records with valid keys: 142
+Video records with valid keys: 138
+Matched unambiguous sets: 133
+Robot-only unmatched keys: 7
+Video-only unmatched keys: 5
+Robot records involved in duplicate keys: 2
+Video records involved in duplicate keys: 0
 
-PRIMARY ACCURACY DEFINITION
-------------------------------------------------------------------------------
+PRIMARY RESULT: CORRECT REP COUNT ACCURACY
+--------------------------------------------------------------------------------
+This is the primary metric because the system's meaningful output is whether a movement is accepted as a correctly performed repetition.
+Valid sets: 132
+Correct rep count accuracy: 79.57%
+MAE: 2.24 reps/set
+Mean signed error (Robot - Video): -1.56 reps/set
+Exact-match rate: 47.0%
+Within ±1 rep: 66.7%
+
+SECONDARY RESULT: TOTAL ATTEMPT COUNT
+--------------------------------------------------------------------------------
+Total attempts include movements that may resemble the exercise but can legitimately be rejected by the form/rep logic.
+Valid sets: 133
+Total attempt count accuracy: 68.07%
+MAE: 3.71 reps/set
+Mean signed error (Robot - Video): 0.92 reps/set
+Exact-match rate: 31.6%
+Within ±1 rep: 54.1%
+
+ACCURACY FORMULA
+--------------------------------------------------------------------------------
 Count Accuracy (%) = 100 × [1 - Σ|Robot Count - Video Count| / ΣVideo Count]
 This is 100 minus weighted absolute percentage error (WAPE).
-Missing video rows are excluded until ground-truth values are added.
-Robot and video records are matched using Participant + Exercise + Set.
 
-OVERALL RESULTS
-------------------------------------------------------------------------------
+PER-EXERCISE CORRECT REP ACCURACY
+--------------------------------------------------------------------------------
+Chest Fly Machine: N=11, accuracy=81.42%, MAE=1.91, exact=27.3%, within ±1=36.4%
+Hammer Curl: N=27, accuracy=94.50%, MAE=0.59, exact=74.1%, within ±1=92.6%
+Lateral Raise: N=15, accuracy=94.89%, MAE=0.47, exact=53.3%, within ±1=100.0%
+Leg Extension: N=10, accuracy=82.76%, MAE=2.00, exact=50.0%, within ±1=50.0%
+Leg Raises: N=5, accuracy=77.27%, MAE=2.00, exact=40.0%, within ±1=60.0%
+Push-up: N=15, accuracy=73.53%, MAE=1.80, exact=26.7%, within ±1=53.3%
+Russian Twist: N=6, accuracy=37.74%, MAE=22.00, exact=0.0%, within ±1=0.0%
+Squat: N=26, accuracy=87.41%, MAE=1.38, exact=65.4%, within ±1=73.1%
+T-Bar Row: N=4, accuracy=62.50%, MAE=2.25, exact=0.0%, within ±1=25.0%
+Tricep Pushdown: N=13, accuracy=85.48%, MAE=1.38, exact=23.1%, within ±1=61.5%
 
-Total Rep Count
-  Valid sets: 132
-  Count accuracy: 68.05%
-  Mean absolute error (MAE): 3.72 reps
-  Mean signed error (Robot - Video): 0.90 reps
-  Exact-match rate: 31.8%
-  Within ±1 rep: 54.5%
+DATA QUALITY WARNING
+--------------------------------------------------------------------------------
+Some keys are still unmatched or duplicated. These records are excluded rather than guessed. See the audit CSV files.
 
-Correct Rep Count
-  Valid sets: 131
-  Count accuracy: 79.43%
-  Mean absolute error (MAE): 2.26 reps
-  Mean signed error (Robot - Video): -1.57 reps
-  Exact-match rate: 46.6%
-  Within ±1 rep: 66.4%
+================================================================================
+QUALITATIVE EXPLANATION OF INACCURACIES
+================================================================================
 
-Incorrect Rep Count
-  Valid sets: 132
-  Count accuracy: 0.00%
-  Mean absolute error (MAE): 2.51 reps
-  Mean signed error (Robot - Video): 2.36 reps
-  Exact-match rate: 36.4%
-  Within ±1 rep: 55.3%
+PASTE / EDIT YOUR MANUAL VIDEO-REVIEW CONCLUSION BELOW:
 
-PER-EXERCISE TOTAL REP COUNT ACCURACY
-------------------------------------------------------------------------------
-Chest Fly Machine: N=11, accuracy=72.50%, MAE=3.00, exact=18.2%, within ±1=36.4%
-Hammer Curl: N=27, accuracy=84.88%, MAE=1.63, exact=40.7%, within ±1=70.4%
-Lateral Raise: N=15, accuracy=86.23%, MAE=1.27, exact=33.3%, within ±1=80.0%
-Leg Extension: N=10, accuracy=77.78%, MAE=2.60, exact=10.0%, within ±1=40.0%
-Leg Raises: N=5, accuracy=72.73%, MAE=2.40, exact=20.0%, within ±1=40.0%
-Push-up: N=15, accuracy=46.99%, MAE=5.87, exact=20.0%, within ±1=46.7%
-Russian Twist: N=6, accuracy=39.62%, MAE=21.33, exact=0.0%, within ±1=0.0%
-Squat: N=26, accuracy=88.66%, MAE=1.27, exact=65.4%, within ±1=80.8%
-T-Bar Row: N=4, accuracy=0.00%, MAE=13.50, exact=0.0%, within ±1=0.0%
-Tricep Pushdown: N=13, accuracy=59.70%, MAE=4.15, exact=15.4%, within ±1=23.1%
-
-IMPORTANT INTERPRETATION
-------------------------------------------------------------------------------
-These results measure agreement between aggregate robot counts and human video counts.
-They do not establish per-repetition classification precision, recall, or F1 because individual robot decisions are not temporally aligned to individual video repetitions in this dataset.
-
-==============================================================================
-QUALITATIVE NOTES ON INACCURACIES
-==============================================================================
-
-PASTE MANUAL QUALITATIVE EXPLANATION BELOW:
-
-Examples to discuss may include:
-- movements that resembled the intended exercise enough for the exercise classifier to accept them, but did not satisfy the rep counter's movement/form thresholds;
-- participants performing an exercise incorrectly or performing a different movement/exercise;
-- equipment, camera position, range-of-motion, or body-position constraints that affected counting.
+- Some movements resembled the intended exercise enough for the exercise classifier to accept the exercise, but did not satisfy the repetition/form thresholds and were therefore rejected.
+- Some participants performed the movement incorrectly or performed a substantially different movement.
+- Equipment constraints, range of motion, camera position, and body position may explain some additional count discrepancies.
 
 
 

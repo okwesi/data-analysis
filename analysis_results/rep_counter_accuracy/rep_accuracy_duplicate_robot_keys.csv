@@ -1,3 +1,3 @@
-Participant,Exercise,Set,Target Reps,Total Attempts,Correct Reps,Incorrect Reps,Notes,Participant Key,Exercise Key,Set Key
-P12,Tricep Pushdown,1,12,18,12.0,6,,P12,tricep pushdown,1
-P12,Tricep Pushdown,1,12,10,4.0,6,,P12,tricep pushdown,1
+Key,CSV Row,Participant,Exercise,Set,Target Reps,Total Attempts,Correct Reps,Incorrect Reps,Notes
+"('P12', 'tricep pushdown', 1)",84,P12,tricep pushdown,1,12.0,18.0,12.0,6.0,
+"('P12', 'tricep pushdown', 1)",86,P12,tricep pushdown,1,12.0,10.0,4.0,6.0,
